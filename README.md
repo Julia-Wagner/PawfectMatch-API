@@ -1,39 +1,87 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# **PawfectMatch API**
 
-Welcome,
+The PawfectMatch API is a Django API for [PawfectMatch](https://github.com/Julia-Wagner/PawfectMatch), a platform to connect shelters with loving homes for their dogs. Shelters can register and post their dogs, share stories and photos. Future dog owners can register to look for dogs.
 
-This is the Code Institute student template for Codeanywhere. If you are using Gitpod then you need [this template](https://github.com/Code-Institute-Org/gitpod-full-template) instead.  We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+# **Table of Contents**
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Codeanywhere and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **August 30th, 2023**
+<!-- TOC -->
+* [**PawfectMatch API**](#pawfectmatch-api)
+* [**Table of Contents**](#table-of-contents)
+* [**Planning**](#planning)
+  * [**User Stories**](#user-stories)
+    * [**Epic: User Authentication**](#epic-user-authentication)
+    * [**Epic: General UX**](#epic-general-ux)
+    * [**Epic: Profile**](#epic-profile)
+    * [**Epic: User Interaction**](#epic-user-interaction)
+    * [**Epic: Posts**](#epic-posts)
+    * [**Epic: Dog Posts**](#epic-dog-posts)
+    * [**Epic: Notifications and Communication**](#epic-notifications-and-communication)
+<!-- TOC -->
 
-## Codeanywhere Reminders
+# **Planning**
 
-To run a frontend (HTML, CSS, Javascript only) application in Codeanywhere, in the terminal, type:
+I detailed planning process using the 5 UX planes is described in the [PawfectMatch repository](https://github.com/Julia-Wagner/PawfectMatch?tab=readme-ov-file#planning).
 
-`python3 -m http.server`
+## **User Stories**
 
-A button should appear to click: _Open Preview_ or _Open Browser_.
+I created separate user stories for the API from the user stories defined for the frontend part of the project using the same epics to group them.
 
-To run a frontend (HTML, CSS, Javascript only) application in Codeanywhere with no-cache, you can use this alias for `python3 -m http.server`.
+I also decided to add these stories to the project board in the main repo instead of creating a separate backend project. This way the entire development process is visible in one board.
 
-`http_server`
+### **Epic: User Authentication**
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+| User Story                                                                                                                                                          | Priority       |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|
+| As a **developer**, I want to **access an API endpoint for registration**, so that I can **create users and profiles**.                                             | **MUST HAVE**  |
+| As a **developer**, I want to **access an API endpoint for login**, so that I can **authenticate users**.                                                           | **MUST HAVE**  |
+| As a **developer**, I want to **access an API endpoint for the feed without providing a logged-in user**, so that I can **access the feed without authentication**. | **MUST HAVE**  |
 
-A button should appear to click: _Open Preview_ or _Open Browser_.
+### **Epic: General UX**
 
-In Codeanywhere you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+| User Story                                                                                                                                                            | Priority      |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
+| As a **developer**, I want to **access an API endpoint for the navigation bar**, so that I can **provide correct navigation options to the user**.                    | **MUST HAVE** |
+| As a **developer**, I want to **get appropriate error messages from the API in response to failed requests**, so that I can **provide users with detailed feedback**. | **MUST HAVE** |
 
-To log into the Heroku toolbelt CLI:
+### **Epic: Profile**
 
-1. Log in to your Heroku account and go to _Account Settings_ in the menu under your avatar.
-2. Scroll down to the _API Key_ and click _Reveal_
-3. Copy the key
-4. In Codeanywhere, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+| User Story                                                                                                                          | Priority       |
+|-------------------------------------------------------------------------------------------------------------------------------------|----------------|
+| As a **developer**, I want to **perform CRUD operations for profiles**, so that I can **allow users to edit their profiles**.       | **MUST HAVE**  |
+| As a **developer**, I want to **access an API endpoint for profile details**, so that I can **correctly show the profile details**. | **MUST HAVE**  |
+| As a **developer**, I want to **edit and get the profile status**, so that I can **show or hide profiles**.                         | **COULD HAVE** |
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+### **Epic: User Interaction**
 
----
+| User Story                                                                                                                         | Priority        |
+|------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| As a **developer**, I want to **perform CRUD operations for follows**, so that I can **allow users to follow each other**.         | **SHOULD HAVE** |
+| As a **developer**, I want to **perform CRUD operations for comments**, so that I can **allow users to add comments to profiles**. | **COULD HAVE**  |
+| As a **developer**, I want to **perform CRUD operations for banned words**, so that I can **ensure that a comment can be posted**. | **COULD HAVE**  |
 
-Happy coding!
+### **Epic: Posts**
+
+| User Story                                                                                                                                 | Priority        |
+|--------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| As a **developer**, I want to **perform CRUD operations for posts**, so that I can **allow users to post content**.                        | **MUST HAVE**   |
+| As a **developer**, I want to **access an API endpoint for pictures**, so that I can **add pictures to posts**.                            | **MUST HAVE**   |
+| As a **developer**, I want to **access an API endpoint for saving a post**, so that I can **provide the user with a list of saved posts**. | **SHOULD HAVE** |
+| As a **developer**, I want to **receive posts from the API based on defined criteria**, so that I can **allow filtering**.                 | **SHOULD HAVE** |
+
+### **Epic: Dog Posts**
+
+| User Story                                                                                                                             | Priority        |
+|----------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| As a **developer**, I want to **have a special type of post for dogs**, so that I can **distinguish dog posts from other posts**.      | **MUST HAVE**   |
+| As a **developer**, I want to **define characteristics for dogs**, so that I can **use them for filtering**.                           | **SHOULD HAVE** |
+| As a **developer**, I want to **define requirements for dogs**, so that I can **use them for filtering**.                              | **COULD HAVE**  |
+| As a **developer**, I want to **mark a dog as adopted**, so that I can **correctly show posts**.                                       | **SHOULD HAVE** |
+| As a **developer**, I want to **receive dogs from the API based on defined criteria**, so that I can **allow filtering and matching**. | **SHOULD HAVE** |
+
+### **Epic: Notifications and Communication**
+
+| User Story                                                                                                               | Priority        |
+|--------------------------------------------------------------------------------------------------------------------------|-----------------|
+| As a **developer**, I want to **receive notifications from the API**, so that I can **alert the user**.                  | **COULD HAVE**  |
+| As a **developer**, I want to **mark notifications as read**, so that I can **know if notifications are new**.           | **COULD HAVE**  |
+| As a **developer**, I want to **perform CRUD operations for chats**, so that I can **allow users to exchange messages**. | **COULD HAVE**  |
