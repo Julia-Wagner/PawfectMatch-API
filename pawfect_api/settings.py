@@ -85,11 +85,13 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+    'corsheaders',
 
     'profiles',
 ]
 SITE_ID = 1
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,6 +100,23 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if 'CLIENT_ORIGIN' in os.environ:
+    CORS_ALLOWED_ORIGINS = [
+        os.environ.get('CLIENT_ORIGIN')
+    ]
+else:
+    CORS_ALLOWED_ORIGINS = []
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        r"^192.168.1.15:3000$",
+    ]
+
+# Add local development origin if CLIENT_ORIGIN_DEV is set
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    dev_origin = os.environ.get('CLIENT_ORIGIN_DEV')
+    CORS_ALLOWED_ORIGINS.append(dev_origin)
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'pawfect_api.urls'
 
