@@ -1,18 +1,15 @@
 from rest_framework import serializers
 from .models import Profile
+from django_countries.serializers import CountryFieldMixin
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
-    country = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
-
-    def get_country(self, obj):
-        return obj.country.name
 
     class Meta:
         model = Profile
