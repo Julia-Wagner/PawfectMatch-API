@@ -4,6 +4,7 @@ from rest_framework import status
 from django.http import Http404
 from .models import Profile
 from .serializers import ProfileSerializer
+from pawfect_api.permissions import IsOwnerOrReadOnly
 
 
 class ProfileList(APIView):
@@ -23,6 +24,7 @@ class ProfileDetail(APIView):
     Retrieve a profile or edit it if you own it.
     """
     serializer_class = ProfileSerializer
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get_object(self, pk):
         try:
