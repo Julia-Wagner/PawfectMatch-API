@@ -89,6 +89,7 @@ INSTALLED_APPS = [
 
     'profiles',
     'posts',
+    'medias',
 ]
 SITE_ID = 1
 MIDDLEWARE = [
