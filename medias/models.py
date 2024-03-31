@@ -11,8 +11,11 @@ class Media(models.Model):
                              related_name='media')
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    type = models.CharField(max_length=20, choices=MEDIA_TYPES)
-    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
+    type = models.CharField(max_length=20, choices=MEDIA_TYPES,
+                            default='image')
+    image = models.ImageField(
+        upload_to='post_images/', default='../default_post_rgq6aq',
+        blank=True, null=True)
     video = models.FileField(upload_to='post_videos/', blank=True, null=True)
     is_main_image = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
