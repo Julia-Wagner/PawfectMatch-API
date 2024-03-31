@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Media(models.Model):
@@ -7,6 +8,8 @@ class Media(models.Model):
         ('video', 'Video'),
     )
 
+    owner = models.ForeignKey(User, on_delete=models.CASCADE,
+                              related_name='medias')
     post = models.ForeignKey('posts.Post', on_delete=models.CASCADE,
                              related_name='media')
     name = models.CharField(max_length=255)
