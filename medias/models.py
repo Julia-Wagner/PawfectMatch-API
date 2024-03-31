@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from cloudinary_storage.storage import VideoMediaCloudinaryStorage
+
 
 class Media(models.Model):
     MEDIA_TYPES = (
@@ -19,7 +21,9 @@ class Media(models.Model):
     image = models.ImageField(
         upload_to='post_images/', default='../f3hx6euwqexhgg3ehdik',
         blank=True)
-    video = models.FileField(upload_to='post_videos/', blank=True, null=True)
+    video = models.FileField(upload_to='post_videos/',
+                             blank=True, null=True,
+                             storage=VideoMediaCloudinaryStorage())
     is_main_image = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
