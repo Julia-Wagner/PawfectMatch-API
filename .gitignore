@@ -15,3 +15,5 @@ media
 
 # testing
 /coverage
+
+venv
