@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from dogs.models import Dog
 from .models import Post
 
 
@@ -7,6 +9,8 @@ class PostSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
+    dogs = serializers.PrimaryKeyRelatedField(
+        queryset=Dog.objects.all(), many=True, required=False)
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -16,5 +20,5 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = [
             'id', 'owner', 'is_owner', 'profile_id', 'profile_image',
-            'title', 'content', 'created_at', 'updated_at'
+            'title', 'type', 'content', 'created_at', 'updated_at', 'dogs'
         ]
