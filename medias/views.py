@@ -4,13 +4,14 @@ from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from dogs.models import Dog
 from pawfect_api.permissions import IsOwnerOrReadOnly
 from posts.models import Post
 from .models import Media
 from .serializers import MediaSerializer
 
 
-class MediaList(APIView):
+class PostMediaList(APIView):
     """
     List medias for post or create a media if logged in.
     """
@@ -34,6 +35,39 @@ class MediaList(APIView):
         )
         if serializer.is_valid():
             serializer.validated_data['post'] = post
+            serializer.save(owner=request.user)
+            return Response(
+                serializer.data, status=status.HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+class DogMediaList(APIView):
+    """
+    List medias for dog or create a media if logged in.
+    """
+    serializer_class = MediaSerializer
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly
+    ]
+
+    def get(self, request, dog_id):
+        dog = get_object_or_404(Dog, pk=dog_id)
+        medias = Media.objects.filter(dog=dog)
+        serializer = MediaSerializer(
+            medias, many=True, context={'request': request}
+        )
+        return Response(serializer.data)
+
+    def post(self, request, dog_id):
+        dog = get_object_or_404(Dog, pk=dog_id)
+        serializer = MediaSerializer(
+            data=request.data, context={'request': request}
+        )
+        if serializer.is_valid():
+            serializer.validated_data['dog'] = dog
             serializer.save(owner=request.user)
             return Response(
                 serializer.data, status=status.HTTP_201_CREATED

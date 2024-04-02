@@ -13,7 +13,9 @@ class Media(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE,
                               related_name='medias')
     post = models.ForeignKey('posts.Post', on_delete=models.CASCADE,
-                             related_name='media')
+                             related_name='medias', null=True)
+    dog = models.ForeignKey('dogs.Dog', on_delete=models.CASCADE,
+                            related_name='medias', null=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     type = models.CharField(max_length=20, choices=MEDIA_TYPES,
@@ -32,4 +34,9 @@ class Media(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"Media for post {self.post.id}"
+        if self.post:
+            return f"Media for post {self.post.id}"
+        elif self.dog:
+            return f"Media for dog {self.dog.id}"
+        else:
+            return "Unassociated Media"
