@@ -30,4 +30,5 @@ urlpatterns = [
     path('', include('profiles.urls')),
     path('', include('posts.urls')),
     path('', include('medias.urls')),
+    path('', include('dogs.urls')),
 ]
