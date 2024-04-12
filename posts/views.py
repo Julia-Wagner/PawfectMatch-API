@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, permissions
 
 from pawfect_api.permissions import IsOwnerOrReadOnly
 from .models import Post
@@ -10,7 +10,7 @@ class PostList(generics.ListCreateAPIView):
     List posts or create a post if logged in.
     """
     serializer_class = PostSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Post.objects.all()
 
     def perform_create(self, serializer):
