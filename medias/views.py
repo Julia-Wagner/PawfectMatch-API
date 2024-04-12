@@ -1,8 +1,5 @@
-from django.http import Http404
-from django.shortcuts import get_object_or_404
-from rest_framework import status, permissions
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from dogs.models import Dog
 from pawfect_api.permissions import IsOwnerOrReadOnly
@@ -11,109 +8,44 @@ from .models import Media
 from .serializers import MediaSerializer
 
 
-class PostMediaList(APIView):
+class PostMediaList(generics.ListCreateAPIView):
     """
     List medias for post or create a media if logged in.
     """
     serializer_class = MediaSerializer
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
-    ]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request, post_id):
-        post = get_object_or_404(Post, pk=post_id)
-        medias = Media.objects.filter(post=post)
-        serializer = MediaSerializer(
-            medias, many=True, context={'request': request}
-        )
-        return Response(serializer.data)
+    def get_queryset(self):
+        post_id = self.kwargs['post_id']
+        return Media.objects.filter(post__pk=post_id)
 
-    def post(self, request, post_id):
-        post = get_object_or_404(Post, pk=post_id)
-        serializer = MediaSerializer(
-            data=request.data, context={'request': request}
-        )
-        if serializer.is_valid():
-            serializer.validated_data['post'] = post
-            serializer.save(owner=request.user)
-            return Response(
-                serializer.data, status=status.HTTP_201_CREATED
-            )
-        return Response(
-            serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
+    def perform_create(self, serializer):
+        post_id = self.kwargs.get('post_id')
+        post = generics.get_object_or_404(Post, pk=post_id)
+        serializer.save(owner=self.request.user, post=post)
 
 
-class DogMediaList(APIView):
+class DogMediaList(generics.ListCreateAPIView):
     """
     List medias for dog or create a media if logged in.
     """
     serializer_class = MediaSerializer
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
-    ]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request, dog_id):
-        dog = get_object_or_404(Dog, pk=dog_id)
-        medias = Media.objects.filter(dog=dog)
-        serializer = MediaSerializer(
-            medias, many=True, context={'request': request}
-        )
-        return Response(serializer.data)
+    def get_queryset(self):
+        dog_id = self.kwargs['dog_id']
+        return Media.objects.filter(dog__pk=dog_id)
 
-    def post(self, request, dog_id):
-        dog = get_object_or_404(Dog, pk=dog_id)
-        serializer = MediaSerializer(
-            data=request.data, context={'request': request}
-        )
-        if serializer.is_valid():
-            serializer.validated_data['dog'] = dog
-            serializer.save(owner=request.user)
-            return Response(
-                serializer.data, status=status.HTTP_201_CREATED
-            )
-        return Response(
-            serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
+    def perform_create(self, serializer):
+        dog_id = self.kwargs.get('dog_id')
+        dog = generics.get_object_or_404(Dog, pk=dog_id)
+        serializer.save(owner=self.request.user, dog=dog)
 
 
-class MediaDetail(APIView):
+class MediaDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve a media and edit or delete it if you own it.
     """
-    permission_classes = [IsOwnerOrReadOnly]
     serializer_class = MediaSerializer
-
-    def get_object(self, pk):
-        try:
-            media = Media.objects.get(pk=pk)
-            self.check_object_permissions(self.request, media)
-            return media
-        except Media.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk):
-        media = self.get_object(pk)
-        serializer = MediaSerializer(
-            media, context={'request': request}
-        )
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        media = self.get_object(pk)
-        serializer = MediaSerializer(
-            media, data=request.data, context={'request': request}
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(
-            serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
-
-    def delete(self, request, pk):
-        media = self.get_object(pk)
-        media.delete()
-        return Response(
-            status=status.HTTP_204_NO_CONTENT
-        )
+    permission_classes = [IsOwnerOrReadOnly]
+    queryset = Media.objects.all()
