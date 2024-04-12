@@ -14,7 +14,7 @@ class Profile(models.Model):
     address_2 = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=255, blank=True)
     postcode = models.CharField(max_length=255, blank=True)
-    country = CountryField(blank=False)
+    country = CountryField(blank=True)
     description = models.TextField(blank=True)
     image = models.ImageField(
         upload_to='images/', default='../cgatwxc9v9hkqy4e5kvb'
