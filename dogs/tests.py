@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from rest_framework import status
 from datetime import datetime
-from .models import Dog
+from .models import Dog, DogCharacteristic
 
 
 class DogListViewTests(APITestCase):
@@ -104,4 +104,88 @@ class DogDetailViewTests(APITestCase):
     def test_regular_user_cannot_delete_dog(self):
         self.client.login(username='user', password='password')
         response = self.client.delete('/dogs/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class DogCharacteristicListViewTests(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='user',
+                                             password='password')
+        self.shelter_user = User.objects.create_user(username='shelter_user',
+                                                     password='password')
+        self.shelter_user.profile.type = "shelter"
+        self.shelter_user.profile.save()
+        self.dog_characteristic = DogCharacteristic.objects.create(
+            characteristic='Friendly')
+
+    def test_can_list_dog_characteristics(self):
+        response = self.client.get('/dogs/characteristics/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_shelter_user_can_create_dog_characteristic(self):
+        self.client.login(username='shelter_user', password='password')
+        response = self.client.post(
+            '/dogs/characteristics/', {'characteristic': 'Energetic'})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_user_not_logged_in_cant_create_dog_characteristic(self):
+        response = self.client.post(
+            '/dogs/characteristics/', {'characteristic': 'Energetic'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_regular_user_cannot_create_dog_characteristic(self):
+        self.client.login(username='user', password='password')
+        response = self.client.post(
+            '/dogs/characteristics/', {'characteristic': 'Energetic'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class DogCharacteristicDetailViewTests(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='user',
+                                             password='password')
+        self.shelter_user = User.objects.create_user(username='shelter_user',
+                                                     password='password')
+        self.shelter_user.profile.type = "shelter"
+        self.shelter_user.profile.save()
+        self.dog_characteristic = DogCharacteristic.objects.create(
+            characteristic='Friendly')
+
+    def test_can_retrieve_dog_characteristic_using_valid_id(self):
+        response = self.client.get(f'/dogs/characteristics/1/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_cant_retrieve_dog_characteristic_using_invalid_id(self):
+        response = self.client.get('/dogs/characteristics/999/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_shelter_user_can_update_dog_characteristic(self):
+        self.client.login(username='shelter_user', password='password')
+        response = self.client.put('/dogs/characteristics/1/',
+                                   {'characteristic': 'Playful'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_not_logged_in_cant_update_dog_characteristic(self):
+        response = self.client.put('/dogs/characteristics/1/',
+                                   {'characteristic': 'Playful'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_regular_user_cannot_update_dog_characteristic(self):
+        self.client.login(username='user', password='password')
+        response = self.client.put('/dogs/characteristics/1/',
+                                   {'characteristic': 'Playful'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_shelter_user_can_delete_dog_characteristic(self):
+        self.client.login(username='shelter_user', password='password')
+        response = self.client.delete('/dogs/characteristics/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_user_not_logged_in_cant_delete_dog_characteristic(self):
+        response = self.client.delete('/dogs/characteristics/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_regular_user_cannot_delete_dog_characteristic(self):
+        self.client.login(username='user', password='password')
+        response = self.client.delete('/dogs/characteristics/1/')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

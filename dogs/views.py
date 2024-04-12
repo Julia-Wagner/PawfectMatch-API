@@ -43,5 +43,6 @@ class DogCharacteristicDetail(generics.RetrieveUpdateDestroyAPIView):
     Retrieve a dog characteristic and edit or delete it if you own it.
     """
     serializer_class = DogCharacteristicSerializer
-    permission_classes = [IsOwnerOrReadOnly & IsShelterOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly
+                          & IsShelterOrReadOnly]
     queryset = DogCharacteristic.objects.all()
