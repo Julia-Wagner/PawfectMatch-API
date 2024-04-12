@@ -1,6 +1,6 @@
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from rest_framework import serializers
-from .models import Comment
+from .models import Comment, BannedWord
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -15,6 +15,18 @@ class CommentSerializer(serializers.ModelSerializer):
     # to get natural time like 3 hours ago instead of timestamp
     created_at = serializers.SerializerMethodField()
     updated_at = serializers.SerializerMethodField()
+
+    def validate_content(self, value):
+        """
+        validate the comment to ensure no banned words are used
+        """
+        banned_words = BannedWord.objects.values_list('word', flat=True)
+        for word in banned_words:
+            if word.lower() in value.lower():
+                raise serializers.ValidationError(
+                    f"The word '{word}' is banned. "
+                    f"Please ensure writing appropriate comments.")
+        return value
 
     def get_is_owner(self, obj):
         request = self.context['request']

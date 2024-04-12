@@ -18,3 +18,13 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+
+
+class BannedWord(models.Model):
+    """
+    Banned word model, used to ensure appropriate comments
+    """
+    word = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.word
