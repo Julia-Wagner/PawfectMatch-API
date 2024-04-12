@@ -27,6 +27,8 @@ class ProfileDetailTests(APITestCase):
     def test_authenticated_user_can_update_own_profile(self):
         self.client.login(username='test', password='password')
         response = self.client.put('/profiles/1/', {'name': 'Updated Name'})
+        profile = Profile.objects.filter(pk=1).first()
+        self.assertEqual(profile.name, 'Updated Name')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_authenticated_user_cannot_update_other_profile(self):

@@ -29,6 +29,8 @@ class DogListViewTests(APITestCase):
             '/dogs/', {'name': 'Stella',
                        'breed': 'Mix',
                        'birthday': datetime.now().strftime("%Y-%m-%d")})
+        count = Dog.objects.count()
+        self.assertEqual(count, 2)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_user_not_logged_in_cant_create_dog(self):
@@ -72,29 +74,31 @@ class DogDetailViewTests(APITestCase):
     def test_shelter_user_can_update_own_dog(self):
         self.client.login(username='shelter_user', password='password')
         response = self.client.put(
-            f'/dogs/1/', {'name': 'Buddy 2',
-                          'breed': 'Labrador',
-                          'birthday': datetime.now().strftime("%Y-%m-%d")})
+            '/dogs/1/', {'name': 'Buddy 2',
+                         'breed': 'Labrador',
+                         'birthday': datetime.now().strftime("%Y-%m-%d")})
+        dog = Dog.objects.filter(pk=1).first()
+        self.assertEqual(dog.name, 'Buddy 2')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_not_logged_in_cant_update_dog(self):
         response = self.client.put(
-            f'/dogs/1/', {'name': 'Buddy 2',
-                          'breed': 'Labrador',
-                          'birthday': datetime.now().strftime("%Y-%m-%d")})
+            '/dogs/1/', {'name': 'Buddy 2',
+                         'breed': 'Labrador',
+                         'birthday': datetime.now().strftime("%Y-%m-%d")})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_regular_user_cannot_update_dog(self):
+    def test_regular_user_cant_update_dog(self):
         self.client.login(username='user', password='password')
         response = self.client.put(
-            f'/dogs/1/', {'name': 'Buddy 2',
-                          'breed': 'Labrador',
-                          'birthday': datetime.now().strftime("%Y-%m-%d")})
+            '/dogs/1/', {'name': 'Buddy 2',
+                         'breed': 'Labrador',
+                         'birthday': datetime.now().strftime("%Y-%m-%d")})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_shelter_user_can_delete_own_dog(self):
         self.client.login(username='shelter_user', password='password')
-        response = self.client.delete(f'/dogs/1/')
+        response = self.client.delete('/dogs/1/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_user_not_logged_in_cant_delete_dog(self):
@@ -126,6 +130,8 @@ class DogCharacteristicListViewTests(APITestCase):
         self.client.login(username='shelter_user', password='password')
         response = self.client.post(
             '/dogs/characteristics/', {'characteristic': 'Energetic'})
+        count = DogCharacteristic.objects.count()
+        self.assertEqual(count, 2)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_user_not_logged_in_cant_create_dog_characteristic(self):
@@ -152,7 +158,7 @@ class DogCharacteristicDetailViewTests(APITestCase):
             characteristic='Friendly')
 
     def test_can_retrieve_dog_characteristic_using_valid_id(self):
-        response = self.client.get(f'/dogs/characteristics/1/')
+        response = self.client.get('/dogs/characteristics/1/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_cant_retrieve_dog_characteristic_using_invalid_id(self):
@@ -163,6 +169,8 @@ class DogCharacteristicDetailViewTests(APITestCase):
         self.client.login(username='shelter_user', password='password')
         response = self.client.put('/dogs/characteristics/1/',
                                    {'characteristic': 'Playful'})
+        dog_characteristic = DogCharacteristic.objects.filter(pk=1).first()
+        self.assertEqual(dog_characteristic.characteristic, 'Playful')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_not_logged_in_cant_update_dog_characteristic(self):

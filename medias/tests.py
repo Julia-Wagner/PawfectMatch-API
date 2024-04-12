@@ -18,7 +18,7 @@ class PostMediaListTests(APITestCase):
                                         owner=self.user)
 
     def test_can_list_post_medias(self):
-        response = self.client.get(f'/medias/post/1/')
+        response = self.client.get('/medias/post/1/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_authenticated_user_can_create_post_media(self):
@@ -26,6 +26,8 @@ class PostMediaListTests(APITestCase):
         response = self.client.post('/medias/post/1/',
                                     {'name': 'test',
                                      'type': 'image'})
+        count = Media.objects.count()
+        self.assertEqual(count, 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_unauthenticated_user_cannot_create_post_media(self):
@@ -54,6 +56,8 @@ class DogMediaListTests(APITestCase):
         response = self.client.post('/medias/dog/1/',
                                     {'name': 'test',
                                      'type': 'image'})
+        count = Media.objects.count()
+        self.assertEqual(count, 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_unauthenticated_user_cannot_create_dog_media(self):
@@ -83,6 +87,8 @@ class MediaDetailTests(APITestCase):
         response = self.client.put('/medias/1/',
                                    {'name': 'updated',
                                     'type': 'image'})
+        media = Media.objects.filter(pk=1).first()
+        self.assertEqual(media.name, 'updated')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_unauthenticated_user_cannot_update_media(self):
