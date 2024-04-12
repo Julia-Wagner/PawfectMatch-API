@@ -15,5 +15,6 @@ media
 
 # testing
 /coverage
+.coverage
 
 venv
