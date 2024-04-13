@@ -79,3 +79,167 @@ I also decided to add these stories to the project board in the main repo instea
 |----------------------------------------------------------------------------------------------------------------------------------|-----------------|
 | As a **developer**, I want to **receive notifications from the API**, so that I can **alert the user**.                          | **COULD HAVE**  |
 | As a **developer**, I want to **perform CRUD operations for chat messages**, so that I can **allow users to exchange messages**. | **COULD HAVE**  |
+
+# **Deployment**
+
+Here is the [link to the deployed project](https://pawfect-api-dacc0c5bf00c.herokuapp.com/).
+
+## **Create Repository**
+
+The first step is to create a new repository, using the [Code Institute Template](https://github.com/Code-Institute-Org/ci-full-template). After creating the repository, you can open it in the IDE of your choice.
+
+If you choose to work in a local IDE, it is important to create a **virtual environment** before continuing. I am using PyCharm, where the local environment can be conveniently set up by adding a new interpreter. Another way is by typing `python -m venv .venv` in the terminal.
+
+## **Project Setup**
+
+1. Install **Django**:
+   - `pip install 'django<4'`
+2. Create a Django project:
+   - `django-admin startproject <name>`
+3. Install supporting **libraries**:
+   - `pip install django-cloudinary-storage`
+   - `pip install Pillow`
+4. Create **requirements.txt** file:
+   - `pip freeze --local > requirements.txt`
+   
+## **Database Setup**
+
+You can use a database of your choice, following are the instructions if you use [ElephantSQL](https://customer.elephantsql.com/).
+
+1. Log in to your account
+2. Click *Create New Instance*
+3. Give the instance a name and select the plan of your choice, *Tiny Turtle* is the free plan.
+4. Click *Select Region* and choose a data center near you
+5. Click *Review* and if the details are correct click *Create instance*
+6. Click on the created instance and copy the database URL
+
+## **Cloudinary Setup**
+
+1. Log in to your [Cloudinary](https://console.cloudinary.com/) account
+2. At the dashboard, copy the link from the **API Environment variable**
+
+## **File Changes**
+
+1. In the **settings.py** file add this code:
+    ```
+    import os
+    import dj_database_url
+   
+    if os.path.isfile("env.py"):  
+        import env
+    
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+    DEBUG = "DEVELOPMENT" in os.environ
+   
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }
+    ```
+2. In the **env.py** file add this code and ensure the file is added to *.gitignore*:
+    ```
+    import os
+
+    os.environ["SECRET_KEY"] = "addSecretKeyHere"
+    os.environ["DEVELOPMENT"] = "TRUE"
+    os.environ["DATABASE_URL"]= "copiedDatabaseURL"
+    os.environ["CLOUDINARY_URL"] = "copiedCloudinaryURL"
+    ```
+3. After these changes, run `python manage.py migrate` to migrate your database structure to the ElephantSQL database.
+4. In the **settings.py** file add this code to link to Cloudinary:
+    ```
+    INSTALLED_APPS = [...
+      'cloudinary_storage',
+      'django.contrib.staticfiles',
+      'cloudinary',
+    ...]
+   
+    # NOTE: the second line should already be in the file, add the line above and below, the order is important)
+   
+    STATIC_URL = 'static/'
+    STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+    MEDIA_URL = '/media/'
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    ```
+
+## **JWT Setup**
+
+1. Install **dj-rest-auth**:
+   - `pip install dj-rest-auth==2.1.9`
+2. Add INSTALLED_APPS in **settings.py**:
+   - `'rest_framework'`
+   - `'rest_framework.authtoken'`
+   - `'dj_rest_auth'`
+   - `'django.contrib.sites'`
+   - `'allauth'`
+   - `'allauth.account'`
+   - `'allauth.socialaccount'`
+   - `'dj_rest_auth.registration'`
+3. Add urls to main app **urls.py**:
+   - `path('dj-rest-auth/', include('dj_rest_auth.urls'))`
+   - `path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls'))`
+4. Set SITE_ID in **settings.py**:
+   - `SITE_ID = 1`
+5. Install **simplejwt**:
+   - `pip install djangorestframework-simplejwt`
+6. Add JWT to **settings.py**:
+    ```
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': [(
+            'rest_framework.authentication.SessionAuthentication'
+            if 'DEV' in os.environ
+            else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+        )],
+        'DEFAULT_PAGINATION_CLASS':
+            'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10,
+        'DATETIME_FORMAT': '%d.%m.%Y',
+    }
+    if 'DEV' not in os.environ:
+        REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+            'rest_framework.renderers.JSONRenderer',
+        ]
+    
+    REST_USE_JWT = True
+    JWT_AUTH_SECURE = True
+    JWT_AUTH_COOKIE = 'my-app-auth'
+    JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
+    JWT_AUTH_SAMESITE = 'None'
+    ```
+7. Migrate database:
+   - `python manage.py migrate`
+   
+## **Heroku Setup**
+
+1. Log in to your [Heruko](https://www.heroku.com/) account
+2. On the dashboard click *New* - *Create new app*
+3. Give the app a unique name
+4. Select the region closest to you and click *Create app*
+5. Select your created app and open the *Settings* tab 
+6. At the *Config Vars* section click *Reveal Config Vars* and add the following:
+   - **DATABASE_URL** with the copied URL from ElephantSQL
+   - **SECRET_KEY** with your secret key
+   - **CLOUDINARY_URL** with the copied URL from Cloudinary
+   - **DISABLE_COLLECTSTATIC** with the value 1
+   - **ALLOWED_HOST** with the value of your deployed Heroku application URL
+
+## **Final Changes**
+
+1. Add `ALLOWED_HOSTS = ["PROJECT_NAME.herokuapp.com", "localhost"]` in **settings.py**
+2. Create a **Procfile** file in the base directory
+3. Add to **Procfile**:
+    - `release: python manage.py makemigrations && python manage.py migrate`
+    - `web: gunicorn <name>.wsgi`
+4. In your **Heroku app**: 
+   - Go to the *Deploy tab* and connect your GitHub repository
+   - Click on *Deploy Branch* at the bottom of the page
+
+## **Forking**
+
+Forking creates a copy of the project on GitHub. Follow these steps to fork this repository:
+1. Log in to your GitHub account and navigate to [the PawfectMatch-API repository](https://github.com/Julia-Wagner/PawfectMatch-API).
+2. Click the **Fork** button on the top right of the repository.
+3. You can now open the forked copy of this project as your own repository.
+4. Follow the above steps to work on the project.
