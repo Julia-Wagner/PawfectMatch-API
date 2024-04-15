@@ -16,6 +16,17 @@ The PawfectMatch API is a Django API for [PawfectMatch](https://github.com/Julia
     * [**Epic: Posts**](#epic-posts)
     * [**Epic: Dog Posts**](#epic-dog-posts)
     * [**Epic: Notifications and Communication**](#epic-notifications-and-communication)
+* [**Deployment**](#deployment)
+  * [**Create Repository**](#create-repository)
+  * [**Project Setup**](#project-setup)
+  * [**Database Setup**](#database-setup)
+  * [**Cloudinary Setup**](#cloudinary-setup)
+  * [**File Changes**](#file-changes)
+  * [**JWT Setup**](#jwt-setup)
+  * [**Heroku Setup**](#heroku-setup)
+  * [**Final Changes**](#final-changes)
+  * [**Forking**](#forking)
+* [**Packages**](#packages)
 <!-- TOC -->
 
 # **Planning**
@@ -243,3 +254,17 @@ Forking creates a copy of the project on GitHub. Follow these steps to fork this
 2. Click the **Fork** button on the top right of the repository.
 3. You can now open the forked copy of this project as your own repository.
 4. Follow the above steps to work on the project.
+
+# **Packages**
+
+- [cloudinary](https://pypi.org/project/cloudinary/) and [django-cloudinary-storage](https://pypi.org/project/django-cloudinary-storage/) -  integrate the application with Cloudinary.
+- [gunicorn](https://pypi.org/project/gunicorn/) - Python WSGI HTTP Server for UNIX.
+- [psycopg2](https://pypi.org/project/psycopg2/) - PostgreSQL database adapter.
+- [Pillow](https://pypi.org/project/Pillow/) - Python Imaging Library.
+- [django-allauth](https://docs.allauth.org/en/latest/) - authentication, registration, account management.
+- [dj-rest-auth](https://dj-rest-auth.readthedocs.io/en/latest/) - REST API endpoints.
+- [django-cors-headers](https://pypi.org/project/django-cors-headers/) - adds Cross-Origin-Resource Sharing (CORS) headers to responses.
+- [djangorestframework-simplejwt](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/) - JSON web token authentication.
+- [django-countries](https://github.com/SmileyChris/django-countries) - provides country choices.
+- [python-magic](https://github.com/ahupp/python-magic#dependencies) - necessary to upload videos to cloudinary.
+- [coverage](https://coverage.readthedocs.io/en/7.4.4/) - to measure testing coverage.
