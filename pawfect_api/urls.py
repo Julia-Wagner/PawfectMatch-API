@@ -32,4 +32,5 @@ urlpatterns = [
     path('', include('medias.urls')),
     path('', include('dogs.urls')),
     path('', include('comments.urls')),
+    path('', include('followers.urls')),
 ]
