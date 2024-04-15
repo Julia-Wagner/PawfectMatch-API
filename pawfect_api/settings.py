@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     'medias',
     'dogs',
     'comments',
+    'followers',
 ]
 SITE_ID = 1
 MIDDLEWARE = [
