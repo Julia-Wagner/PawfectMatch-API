@@ -10,7 +10,9 @@ from .serializers import MediaSerializer
 
 class PostMediaList(generics.ListCreateAPIView):
     """
-    List medias for post or create a media if logged in.
+    List medias for post.
+    Create a media if logged in.
+    perform_create: associate the media with the logged in user and post.
     """
     serializer_class = MediaSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -27,7 +29,9 @@ class PostMediaList(generics.ListCreateAPIView):
 
 class DogMediaList(generics.ListCreateAPIView):
     """
-    List medias for dog or create a media if logged in.
+    List medias for dog.
+    Create a media if logged in.
+    perform_create: associate the media with the logged in user and dog.
     """
     serializer_class = MediaSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

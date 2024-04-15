@@ -8,6 +8,7 @@ from pawfect_api.permissions import IsOwnerOrReadOnly
 class ProfileList(generics.ListAPIView):
     """
     List all profiles.
+    No create view as profile creation is handled by django signals.
     """
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()

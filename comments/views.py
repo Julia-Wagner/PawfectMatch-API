@@ -7,6 +7,7 @@ from .serializers import CommentSerializer, CommentDetailSerializer
 class CommentList(generics.ListCreateAPIView):
     """
     List comments or create a comment if logged in.
+    perform_create: associate the comment with the logged in user.
     """
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

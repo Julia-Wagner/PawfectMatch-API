@@ -7,7 +7,9 @@ from .serializers import DogSerializer, DogCharacteristicSerializer
 
 class DogList(generics.ListCreateAPIView):
     """
-    List dogs or create a dog if logged in and user is shelter.
+    List all dogs.
+    Create a dog if logged in and user is shelter.
+    perform_create: associate the dog with the logged in user.
     """
     serializer_class = DogSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly
@@ -29,8 +31,8 @@ class DogDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class DogCharacteristicList(generics.ListCreateAPIView):
     """
-    List all dog characteristics
-    or create a new one if logged in and user is shelter.
+    List all dog characteristics.
+    Create a new one if logged in and user is shelter.
     """
     serializer_class = DogCharacteristicSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly
