@@ -1,8 +1,26 @@
-from rest_framework import generics, permissions, filters
+from django_filters.rest_framework import (DjangoFilterBackend, FilterSet)
+from django_filters import filters
+from rest_framework import generics, permissions
+from rest_framework.filters import SearchFilter
 
 from pawfect_api.permissions import IsOwnerOrReadOnly, IsShelterOrReadOnly
 from .models import Dog, DogCharacteristic
 from .serializers import DogSerializer, DogCharacteristicSerializer
+
+
+class DogFilter(FilterSet):
+    """
+    Custom filterset to allow filtering dogs based on characteristics.
+    """
+    characteristics = filters.ModelMultipleChoiceFilter(
+        queryset=DogCharacteristic.objects.all(),
+        field_name='characteristics__characteristic',
+        to_field_name='characteristic',
+        conjoined=True)
+
+    class Meta:
+        model = Dog
+        fields = ['breed', 'size', 'gender', 'is_adopted', 'characteristics']
 
 
 class DogList(generics.ListCreateAPIView):
@@ -16,8 +34,10 @@ class DogList(generics.ListCreateAPIView):
                           & IsShelterOrReadOnly]
     queryset = Dog.objects.all()
     filter_backends = [
-        filters.SearchFilter
+        SearchFilter,
+        DjangoFilterBackend,
     ]
+    filterset_class = DogFilter
     search_fields = [
         'owner__username',
         'name',
