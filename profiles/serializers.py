@@ -13,6 +13,7 @@ class ProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
     dogs_count = serializers.ReadOnlyField()
     followers_count = serializers.ReadOnlyField()
     following_count = serializers.ReadOnlyField()
+    comments_count = serializers.ReadOnlyField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -33,5 +34,6 @@ class ProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
             'id', 'owner', 'created_at', 'updated_at', 'name',
             'address_1', 'address_2', 'city', 'postcode', 'country',
             'description', 'type', 'image', 'is_owner', 'following_id',
-            'posts_count', 'dogs_count', 'followers_count', 'following_count'
+            'posts_count', 'dogs_count', 'followers_count', 'following_count',
+            'comments_count'
         ]

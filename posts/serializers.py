@@ -13,6 +13,7 @@ class PostSerializer(serializers.ModelSerializer):
     dogs = serializers.PrimaryKeyRelatedField(
         queryset=Dog.objects.all(), many=True, required=False)
     save_id = serializers.SerializerMethodField()
+    saves_count = serializers.ReadOnlyField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -32,5 +33,5 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'is_owner', 'profile_id', 'profile_image',
             'title', 'type', 'content', 'created_at', 'updated_at', 'dogs',
-            'save_id'
+            'save_id', 'saves_count'
         ]

@@ -16,7 +16,8 @@ class ProfileList(generics.ListAPIView):
         posts_count=Count('owner__posts', distinct=True),
         dogs_count=Count('owner__dogs', distinct=True),
         followers_count=Count('owner__followed', distinct=True),
-        following_count=Count('owner__following', distinct=True)
+        following_count=Count('owner__following', distinct=True),
+        comments_count=Count('comment', distinct=True)
     ).order_by('-created_at')
     filter_backends = [
         filters.OrderingFilter
@@ -28,6 +29,7 @@ class ProfileList(generics.ListAPIView):
         'following_count',
         'owner__followed__created_at',
         'owner__following__created_at',
+        'comments_count',
     ]
 
 
@@ -41,5 +43,6 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
         posts_count=Count('owner__posts', distinct=True),
         dogs_count=Count('owner__dogs', distinct=True),
         followers_count=Count('owner__followed', distinct=True),
-        following_count=Count('owner__following', distinct=True)
+        following_count=Count('owner__following', distinct=True),
+        comments_count=Count('comment', distinct=True)
     ).order_by('-created_at')
