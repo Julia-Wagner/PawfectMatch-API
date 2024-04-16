@@ -268,3 +268,4 @@ Forking creates a copy of the project on GitHub. Follow these steps to fork this
 - [django-countries](https://github.com/SmileyChris/django-countries) - provides country choices.
 - [python-magic](https://github.com/ahupp/python-magic#dependencies) - necessary to upload videos to cloudinary.
 - [coverage](https://coverage.readthedocs.io/en/7.4.4/) - to measure testing coverage.
+- [django-filters](https://django-filter.readthedocs.io/en/stable/) - to implement filter functionality.
