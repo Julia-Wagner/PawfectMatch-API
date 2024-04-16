@@ -15,9 +15,6 @@ class PostList(generics.ListCreateAPIView):
     """
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Post.objects.annotate(
-        saves_count=Count('saves', distinct=True)
-    ).order_by('-created_at')
     filter_backends = [
         filters.OrderingFilter,
         filters.SearchFilter,
@@ -40,9 +37,21 @@ class PostList(generics.ListCreateAPIView):
         'saves__created_at',
     ]
 
+    def get_queryset(self):
+        """
+        Allow adding a query parameter to get dog posts.
+        """
+        queryset = Post.objects.annotate(
+            saves_count=Count('saves', distinct=True),
+            dog_count=Count('dogs', distinct=True)
+        ).order_by('-created_at')
 
-def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        if self.request.query_params.get('has_dogs') == 'true':
+            queryset = queryset.filter(dog_count__gt=0)
+        return queryset
+
+    def perform_create(self, serializer):
+            serializer.save(owner=self.request.user)
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
