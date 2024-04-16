@@ -9,6 +9,10 @@ class ProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     following_id = serializers.SerializerMethodField()
+    posts_count = serializers.ReadOnlyField()
+    dogs_count = serializers.ReadOnlyField()
+    followers_count = serializers.ReadOnlyField()
+    following_count = serializers.ReadOnlyField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -28,5 +32,6 @@ class ProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'created_at', 'updated_at', 'name',
             'address_1', 'address_2', 'city', 'postcode', 'country',
-            'description', 'type', 'image', 'is_owner', 'following_id'
+            'description', 'type', 'image', 'is_owner', 'following_id',
+            'posts_count', 'dogs_count', 'followers_count', 'following_count'
         ]
