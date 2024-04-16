@@ -18,7 +18,12 @@ class PostList(generics.ListCreateAPIView):
         saves_count=Count('saves', distinct=True)
     ).order_by('-created_at')
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        filters.SearchFilter
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
     ]
     ordering_fields = [
         'saves_count',

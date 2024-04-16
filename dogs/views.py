@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 
 from pawfect_api.permissions import IsOwnerOrReadOnly, IsShelterOrReadOnly
 from .models import Dog, DogCharacteristic
@@ -15,6 +15,13 @@ class DogList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly
                           & IsShelterOrReadOnly]
     queryset = Dog.objects.all()
+    filter_backends = [
+        filters.SearchFilter
+    ]
+    search_fields = [
+        'owner__username',
+        'name',
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
