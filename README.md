@@ -16,6 +16,12 @@ The PawfectMatch API is a Django API for [PawfectMatch](https://github.com/Julia
     * [**Epic: Posts**](#epic-posts)
     * [**Epic: Dog Posts**](#epic-dog-posts)
     * [**Epic: Notifications and Communication**](#epic-notifications-and-communication)
+* [**Features/Apps**](#featuresapps)
+  * [**Comments App**](#comments-app)
+  * [**Dogs App**](#dogs-app)
+  * [**Followers App**](#followers-app)
+  * [**Medias App**](#medias-app)
+* [**Testing**](#testing)
 * [**Deployment**](#deployment)
   * [**Create Repository**](#create-repository)
   * [**Project Setup**](#project-setup)
@@ -97,7 +103,7 @@ The features of the PawfectMatch API can be broken down to apps. Here is a short
 
 ## **Comments App**
 
-Instead of adding comments to posts, my project allows comments for profiles. Logged in users can create comments and edit and delete their own comments. 
+Instead of adding comments to posts, my project allows comments for profiles. Logged-in users can create comments and edit and delete their own comments. 
 
 Besides the **Comment** model, I added a **BannedWord** model. This allows superusers to add banned words in the admin panel. Banned words are enforced in comments to ensure appropriate usage. If a comment contains a bad word, it will not be posted and the user gets an error message.
 
@@ -107,7 +113,7 @@ Besides the **Comment** model, I added a **BannedWord** model. This allows super
 
 ## **Dogs App**
 
-Dogs can only be managed by users with the profile type *shelter*. To ensure this, I added the custom permission **IsShelterOrReadOnly**. Logged in shelters can create dogs and edit or delete their own dogs.
+Dogs can only be managed by users with the profile type *shelter*. To ensure this, I added the custom permission **IsShelterOrReadOnly**. Logged-in shelters can create dogs and edit or delete their own dogs.
 
 Besides the **Dog** model, I added a **DogCharacteristic** model. Characteristics can also be created, edited, and deleted by shelter users. Existing characteristics can be linked to dogs.
 
@@ -121,11 +127,22 @@ I created a custom **DogFilter** to allow filtering dogs by their characteristic
 
 ## **Followers App**
 
-I adapted this app from the Code Institute walkthrough project. Logged in users can follow and unfollow other users.
+I adapted this app from the Code Institute walkthrough project. Logged-in users can follow and unfollow other users.
 
 **API Endpoints:**
 - `/followers/`: to list (**GET**) or create (**POST**) follows.
 - `/followers/:id/`: to show (**GET**), delete (**DELETE**) a follow.
+
+## **Medias App**
+
+I decided to create a separate *medias* app instead of adding an image field to the post. The reason for this is that I want to allow users to upload multiple images and even videos for posts and also dogs. This way the app can be used for both [Posts](#posts-app) and [Dogs](#dogs-app).
+
+Logged-in users can add images or videos to posts or dogs. The custom permission **IsShelterOrReadOnly** is used to ensure only shelter users can create medias for dogs.
+
+**API Endpoints:**
+- `/medias/post/:post_id/`: to list (**GET**) or create (**POST**) medias for the specified post.
+- `/medias/dog/:dog_id/`: to list (**GET**) or create (**POST**) medias for the specified dog.
+- `/medias/:id/`: to show (**GET**), update (**PUT**) or delete (**DELETE**) a media.
 
 # **Testing**
 
