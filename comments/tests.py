@@ -48,6 +48,10 @@ class CommentListViewTests(APITestCase):
                       response.data['content'])
         self.assertNotEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_create_banned_word(self):
+        banned_word = BannedWord.objects.first()
+        self.assertEqual(str(banned_word), 'bannedword1')
+
 
 class CommentDetailViewTests(APITestCase):
     def setUp(self):
