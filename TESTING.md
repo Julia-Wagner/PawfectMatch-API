@@ -12,6 +12,7 @@
   * [**User Story Testing**](#user-story-testing)
   * [**Validation**](#validation)
     * [**Python Validation**](#python-validation)
+  * [**Bugs and Fixes**](#bugs-and-fixes)
 <!-- TOC -->
 
 ## **Manual Testing**
@@ -26,7 +27,7 @@ I installed *coverage* to check the testing coverage for my code. Using the *.ht
 
 My total coverage for my unit tests is **98%**, with **100%** for all custom apps except for two. The medias serializer can not be fully tested automatically as it checks the uploaded size and file type for the image or video. And the posts view filter to check if a post has linked dogs was not tested automatically. I made sure to test these two apps again manually.
 
-![test coverage](docs/screenshots/coverage.jpg)
+![test coverage](docs/screenshots/coverage.jpg)\
 *Unit test coverage*
 
 ## **User Story Testing**
@@ -65,3 +66,10 @@ As in my last project, the only real error coming from a file that I changed was
 
 ![Flake8 validation](docs/screenshots/flake8.png)\
 *Flake8 validation result*
+
+## **Bugs and Fixes**
+
+Thanks to the automated unit tests I found some bugs, mainly due to incorrect permissions. There are no known bugs that are not resolved.
+
+One issue that took a lot of time while developing was allowing the upload of videos. After a lot of research, I found out that I need to use **VideoMediaCloudinaryStorage** to allow the upload of videos to Cloudinary. However, that requires the package **python-magic**. As I am using a *Windows* device, I installed **python-magic-lib** for Windows. Uploading videos then worked locally, but after trying to deploy it on Heroku the build failed.\
+After many more hours of research and trying different solutions, I realized that the problem is that Heroku runs on *Linux* and therefore can´t install the Windows-specific package. I found the solution in [this article](https://github.com/ahupp/python-magic/issues/248) to download the magic files and save them on my device for *python-magic* to work locally without the Windows package.
