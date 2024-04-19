@@ -119,6 +119,14 @@ I created a custom **DogFilter** to allow filtering dogs by their characteristic
 - `/dogs/characteristics/`: to list (**GET**) or create (**POST**) dog characteristics.
 - `/dogs/characteristics/:id/`: to show (**GET**), update (**PUT**) or delete (**DELETE**) a dog characteristic.
 
+## **Followers App**
+
+I adapted this app from the Code Institute walkthrough project. Logged in users can follow and unfollow other users.
+
+**API Endpoints:**
+- `/followers/`: to list (**GET**) or create (**POST**) follows.
+- `/followers/:id/`: to show (**GET**), delete (**DELETE**) a follow.
+
 # **Testing**
 
 # **Deployment**
