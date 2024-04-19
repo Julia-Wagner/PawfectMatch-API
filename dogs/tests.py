@@ -31,6 +31,8 @@ class DogListViewTests(APITestCase):
                        'birthday': datetime.now().strftime("%Y-%m-%d")})
         count = Dog.objects.count()
         self.assertEqual(count, 2)
+        created_dog = Dog.objects.first()
+        self.assertEqual(str(created_dog), '2 Stella')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_user_not_logged_in_cant_create_dog(self):
@@ -132,6 +134,8 @@ class DogCharacteristicListViewTests(APITestCase):
             '/dogs/characteristics/', {'characteristic': 'Energetic'})
         count = DogCharacteristic.objects.count()
         self.assertEqual(count, 2)
+        created_characteristic = DogCharacteristic.objects.last()
+        self.assertEqual(str(created_characteristic), 'Energetic')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_user_not_logged_in_cant_create_dog_characteristic(self):
