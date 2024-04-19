@@ -149,6 +149,16 @@ Posts can be filtered and searched.
 - `/posts/`: to list (**GET**) or create (**POST**) posts.
 - `/posts/:id/`: to show (**GET**), update (**PUT**) or delete (**DELETE**) a post.
 
+## **Profiles App**
+
+A Profile is automatically created for each user at registration. Details can be added to each profile by updating it.
+
+Comments can be added to profiles and profiles can be filtered.
+
+**API Endpoints:**
+- `/profiles/`: to list (**GET**) profiles.
+- `/profiles/:id/`: to show (**GET**) or update (**PUT**) a profile.
+
 # **Testing**
 
 # **Deployment**
