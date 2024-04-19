@@ -19,6 +19,8 @@ class PostListViewTests(APITestCase):
         response = self.client.post('/posts/', {'title': 'test title'})
         count = Post.objects.count()
         self.assertEqual(count, 1)
+        created_post = Post.objects.first()
+        self.assertEqual(str(created_post), '1 test title')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_user_not_logged_in_cant_create_post(self):
