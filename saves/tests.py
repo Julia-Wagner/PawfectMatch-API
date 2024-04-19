@@ -23,12 +23,21 @@ class SaveListViewTests(APITestCase):
     def test_create_save(self):
         self.client.login(username='user1', password='password')
         response = self.client.post('/saves/', {'post': self.post.id})
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Save.objects.count(), 1)
+        created_save = Save.objects.first()
+        self.assertEqual(str(created_save), 'user1 1 Sample Post')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_user_not_logged_in_cant_create_save(self):
         response = self.client.post('/saves/', {'post': self.post.id})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_cannot_save_twice(self):
+        self.client.login(username='user1', password='password')
+        self.client.post('/saves/', {'post': self.post.id})
+        response = self.client.post('/saves/', {'post': self.post.id})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertContains(response, 'possible duplicate', status_code=400)
 
 
 class SaveDetailViewTests(APITestCase):
@@ -49,8 +58,8 @@ class SaveDetailViewTests(APITestCase):
     def test_delete_own_save(self):
         self.client.login(username='user1', password='password')
         response = self.client.delete('/saves/1/')
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Save.objects.count(), 0)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_user_cant_delete_another_users_save(self):
         self.client.login(username='user2', password='password')
