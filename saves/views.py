@@ -8,7 +8,7 @@ class SaveList(generics.ListCreateAPIView):
     """
     List saves.
     Create a save if logged in.
-    perform_create: associate the save with the logged in user.
+    perform_create: associate the save with the logged-in user.
     """
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = SaveSerializer

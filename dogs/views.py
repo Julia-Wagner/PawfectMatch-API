@@ -27,7 +27,7 @@ class DogList(generics.ListCreateAPIView):
     """
     List all dogs.
     Create a dog if logged in and user is shelter.
-    perform_create: associate the dog with the logged in user.
+    perform_create: associate the dog with the logged-in user.
     """
     serializer_class = DogSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly

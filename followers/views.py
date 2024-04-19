@@ -8,7 +8,7 @@ class FollowerList(generics.ListCreateAPIView):
     """
     List all followers.
     Create a follower if logged in.
-    perform_create: associate the follower with the logged in user.
+    perform_create: associate the follower with the logged-in user.
     """
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Follower.objects.all()

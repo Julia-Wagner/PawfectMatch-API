@@ -11,7 +11,7 @@ class PostList(generics.ListCreateAPIView):
     """
     List posts.
     Create a post if logged in.
-    perform_create: associate the post with the logged in user.
+    perform_create: associate the post with the logged-in user.
     """
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

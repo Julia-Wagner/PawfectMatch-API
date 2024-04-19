@@ -41,6 +41,10 @@ class DogMediaListTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='user',
                                              password='password')
+        self.shelter_user = User.objects.create_user(username='shelter_user',
+                                                     password='password')
+        self.shelter_user.profile.type = "shelter"
+        self.shelter_user.profile.save()
         self.dog = Dog.objects.create(
             owner=self.user,
             name='Buddy',
@@ -51,14 +55,22 @@ class DogMediaListTests(APITestCase):
         response = self.client.get('/medias/dog/1/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_authenticated_user_can_create_dog_media(self):
-        self.client.login(username='user', password='password')
+    def test_authenticated_shelter_user_can_create_dog_media(self):
+        self.client.login(username='shelter_user', password='password')
         response = self.client.post('/medias/dog/1/',
                                     {'name': 'test',
                                      'type': 'image'})
         count = Media.objects.count()
         self.assertEqual(count, 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_regular_user_cannot_create_dog_media(self):
+        self.client.login(username='user', password='password')
+        response = self.client.post('/medias/dog/1/',
+                                    {'name': 'test',
+                                     'type': 'image'})
+        count = Media.objects.count()
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_unauthenticated_user_cannot_create_dog_media(self):
         response = self.client.post('/medias/dog/1/',

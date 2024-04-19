@@ -2,7 +2,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
 from dogs.models import Dog
-from pawfect_api.permissions import IsOwnerOrReadOnly
+from pawfect_api.permissions import IsOwnerOrReadOnly, IsShelterOrReadOnly
 from posts.models import Post
 from .models import Media
 from .serializers import MediaSerializer
@@ -12,7 +12,7 @@ class PostMediaList(generics.ListCreateAPIView):
     """
     List medias for post.
     Create a media if logged in.
-    perform_create: associate the media with the logged in user and post.
+    perform_create: associate the media with the logged-in user and post.
     """
     serializer_class = MediaSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -31,10 +31,11 @@ class DogMediaList(generics.ListCreateAPIView):
     """
     List medias for dog.
     Create a media if logged in.
-    perform_create: associate the media with the logged in user and dog.
+    perform_create: associate the media with the logged-in user and dog.
     """
     serializer_class = MediaSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly
+                          & IsShelterOrReadOnly]
 
     def get_queryset(self):
         dog_id = self.kwargs['dog_id']
