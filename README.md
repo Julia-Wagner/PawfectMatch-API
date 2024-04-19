@@ -102,8 +102,22 @@ Instead of adding comments to posts, my project allows comments for profiles. Lo
 Besides the **Comment** model, I added a **BannedWord** model. This allows superusers to add banned words in the admin panel. Banned words are enforced in comments to ensure appropriate usage. If a comment contains a bad word, it will not be posted and the user gets an error message.
 
 **API Endpoints:**
-- `/comments/`: to list (**GET**) or create (**POST**) comments
+- `/comments/`: to list (**GET**) or create (**POST**) comments.
 - `/comments/:id/`: to show (**GET**), update (**PUT**) or delete (**DELETE**) a comment.
+
+## **Dogs App**
+
+Dogs can only be managed by users with the profile type *shelter*. To ensure this, I added the custom permission **IsShelterOrReadOnly**. Logged in shelters can create dogs and edit or delete their own dogs.
+
+Besides the **Dog** model, I added a **DogCharacteristic** model. Characteristics can also be created, edited, and deleted by shelter users. Existing characteristics can be linked to dogs.
+
+I created a custom **DogFilter** to allow filtering dogs by their characteristics and other fields.
+
+**API Endpoints:**
+- `/dogs/`: to list (**GET**) or create (**POST**) dogs.
+- `/dogs/:id/`: to show (**GET**), update (**PUT**) or delete (**DELETE**) a dog.
+- `/dogs/characteristics/`: to list (**GET**) or create (**POST**) dog characteristics.
+- `/dogs/characteristics/:id/`: to show (**GET**), update (**PUT**) or delete (**DELETE**) a dog characteristic.
 
 # **Testing**
 
