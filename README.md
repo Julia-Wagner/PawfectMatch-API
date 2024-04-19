@@ -37,7 +37,7 @@ I detailed planning process using the 5 UX planes is described in the [PawfectMa
 
 I created separate user stories for the API from the user stories defined for the frontend part of the project using the same epics to group them.
 
-I also decided to add these stories to the project board in the main repo instead of creating a separate backend project. This way the entire development process is visible in one board.
+I also decided to add these stories to the [project board](https://github.com/users/Julia-Wagner/projects/4) in the main repo instead of creating a separate backend board. This way the entire development process is visible in one board.
 
 ### **Epic: User Authentication**
 
@@ -90,6 +90,22 @@ I also decided to add these stories to the project board in the main repo instea
 |----------------------------------------------------------------------------------------------------------------------------------|-----------------|
 | As a **developer**, I want to **receive notifications from the API**, so that I can **alert the user**.                          | **COULD HAVE**  |
 | As a **developer**, I want to **perform CRUD operations for chat messages**, so that I can **allow users to exchange messages**. | **COULD HAVE**  |
+
+# **Features/Apps**
+
+The features of the PawfectMatch API can be broken down to apps. Here is a short summary of each app. All apps include automated testing, further described in the [Testing](#testing) section.
+
+## **Comments App**
+
+Instead of adding comments to posts, my project allows comments for profiles. Logged in users can create comments and edit and delete their own comments. 
+
+Besides the **Comment** model, I added a **BannedWord** model. This allows superusers to add banned words in the admin panel. Banned words are enforced in comments to ensure appropriate usage. If a comment contains a bad word, it will not be posted and the user gets an error message.
+
+**API Endpoints:**
+- `/comments/`: to list (**GET**) or create (**POST**) comments
+- `/comments/:id/`: to show (**GET**), update (**PUT**) or delete (**DELETE**) a comment.
+
+# **Testing**
 
 # **Deployment**
 
