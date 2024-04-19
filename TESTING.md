@@ -9,6 +9,7 @@
   * [**Table of Contents**](#table-of-contents)
   * [**Manual Testing**](#manual-testing)
   * [**Automated Testing**](#automated-testing)
+  * [**User Story Testing**](#user-story-testing)
 <!-- TOC -->
 
 ## **Manual Testing**
@@ -25,3 +26,27 @@ My total coverage for my unit tests is **98%**, with **100%** for all custom app
 
 ![test coverage](docs/screenshots/coverage.jpg)
 *Unit test coverage*
+
+## **User Story Testing**
+
+In order for the **Acceptance Criteria met** to be ticked, every criterion specified in the linked project issue has to be fulfilled.
+
+| User Story                                                                                                                                                            | Link to Acceptance Criteria                                    | Acceptance Criteria met |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|-------------------------|
+| As a **developer**, I want to **access an API endpoint for registration**, so that I can **create users and profiles**.                                               | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/1)  | &check;                 |
+| As a **developer**, I want to **access an API endpoint for login**, so that I can **authenticate users**.                                                             | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/2)  | &check;                 |
+| As a **developer**, I want to **access an API endpoint for the feed without providing a logged-in user**, so that I can **access the feed without authentication**.   | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/3)  | &check;                 |
+| As a **developer**, I want to **get appropriate error messages from the API in response to failed requests**, so that I can **provide users with detailed feedback**. | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/4)  | &check;                 |
+| As a **developer**, I want to **perform CRUD operations for profiles**, so that I can **allow users to edit their profiles**.                                         | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/5)  | &check;                 |
+| As a **developer**, I want to **edit and get the profile status**, so that I can **show or hide profiles**.                                                           | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/6)  | TODO                    |
+| As a **developer**, I want to **access follow API endpoints**, so that I can **allow users to follow each other**.                                                    | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/7)  | &check;                 |
+| As a **developer**, I want to **perform CRUD operations for comments**, so that I can **allow users to add comments to profiles**.                                    | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/8)  | &check;                 |
+| As a **developer**, I want to **define banned words**, so that I can **ensure appropriate comments**.                                                                 | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/9)  | &check;                 |
+| As a **developer**, I want to **perform CRUD operations for posts**, so that I can **allow users to post content**.                                                   | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/10) | &check;                 |
+| As a **developer**, I want to **access an API endpoint for saving a post**, so that I can **provide the user with a list of saved posts**.                            | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/11) | &check;                 |
+| As a **developer**, I want to **have a special type of post for dogs**, so that I can **distinguish dog posts from other posts**.                                     | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/12) | &check;                 |
+| As a **developer**, I want to **define requirements for dogs**, so that I can **use them for filtering**.                                                             | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/13) | TODO                    |
+| As a **developer**, I want to **mark a dog as adopted**, so that I can **correctly show posts**.                                                                      | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/14) | &check;                 |
+| As a **developer**, I want to **receive dogs from the API based on defined criteria**, so that I can **allow filtering and matching**.                                | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/15) | &check;                 |
+| As a **developer**, I want to **receive notifications from the API**, so that I can **alert the user**.                                                               | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/16) | TODO                    |
+| As a **developer**, I want to **perform CRUD operations for chat messages**, so that I can **allow users to exchange messages**.                                      | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/17) | TODO                    |
