@@ -169,6 +169,8 @@ Similar to followers, saves can either be created or deleted, but not updated. L
 
 # **Testing**
 
+Please refer to the separate [TESTING.md](TESTING.md) file.
+
 # **Deployment**
 
 Here is the [link to the deployed project](https://pawfect-api-dacc0c5bf00c.herokuapp.com/).
