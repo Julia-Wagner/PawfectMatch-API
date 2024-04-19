@@ -38,5 +38,3 @@ class Media(models.Model):
             return f"Media for post {self.post.id}"
         elif self.dog:
             return f"Media for dog {self.dog.id}"
-        else:
-            return "Unassociated Media"

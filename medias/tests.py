@@ -28,6 +28,8 @@ class PostMediaListTests(APITestCase):
                                      'type': 'image'})
         count = Media.objects.count()
         self.assertEqual(count, 1)
+        created_media = Media.objects.first()
+        self.assertEqual(str(created_media), 'Media for post 1')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_unauthenticated_user_cannot_create_post_media(self):
@@ -62,6 +64,8 @@ class DogMediaListTests(APITestCase):
                                      'type': 'image'})
         count = Media.objects.count()
         self.assertEqual(count, 1)
+        created_media = Media.objects.first()
+        self.assertEqual(str(created_media), 'Media for dog 1')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_regular_user_cannot_create_dog_media(self):
