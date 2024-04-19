@@ -13,11 +13,15 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='media',
             name='image',
-            field=models.ImageField(blank=True, default='../default_post_rgq6aq', null=True, upload_to='post_images/'),
+            field=models.ImageField(blank=True,
+                                    default='../default_post_rgq6aq',
+                                    null=True, upload_to='post_images/'),
         ),
         migrations.AlterField(
             model_name='media',
             name='type',
-            field=models.CharField(choices=[('image', 'Image'), ('video', 'Video')], default='image', max_length=20),
+            field=models.CharField(choices=[('image', 'Image'),
+                                            ('video', 'Video')],
+                                   default='image', max_length=20),
         ),
     ]

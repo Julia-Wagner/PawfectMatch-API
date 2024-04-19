@@ -13,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='media',
             name='video',
-            field=models.FileField(blank=True, null=True, upload_to='post_videos/'),
+            field=models.FileField(blank=True,
+                                   null=True,
+                                   upload_to='post_videos/'),
         ),
     ]

@@ -1,4 +1,3 @@
-import os
 from datetime import datetime
 
 from django.contrib.auth.models import User
@@ -73,7 +72,6 @@ class DogMediaListTests(APITestCase):
         response = self.client.post('/medias/dog/1/',
                                     {'name': 'test',
                                      'type': 'image'})
-        count = Media.objects.count()
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_unauthenticated_user_cannot_create_dog_media(self):

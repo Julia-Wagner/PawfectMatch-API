@@ -18,7 +18,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Profile',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True,
+                                           serialize=False,
+                                           verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('name', models.CharField(blank=True, max_length=255)),
@@ -27,11 +30,17 @@ class Migration(migrations.Migration):
                 ('address_2', models.CharField(blank=True, max_length=255)),
                 ('city', models.CharField(blank=True, max_length=255)),
                 ('postcode', models.CharField(blank=True, max_length=255)),
-                ('country', django_countries.fields.CountryField(max_length=2)),
+                ('country', django_countries.fields.CountryField(
+                    max_length=2)),
                 ('description', models.TextField(blank=True)),
-                ('image', models.ImageField(default='../cgatwxc9v9hkqy4e5kvb', upload_to='images/')),
-                ('type', models.CharField(choices=[('shelter', 'Shelter'), ('adopter', 'Adopter')], default='adopter', max_length=255)),
-                ('owner', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('image', models.ImageField(
+                    default='../cgatwxc9v9hkqy4e5kvb', upload_to='images/')),
+                ('type', models.CharField(choices=[('shelter', 'Shelter'),
+                                                   ('adopter', 'Adopter')],
+                                          default='adopter', max_length=255)),
+                ('owner', models.OneToOneField(
+                    on_delete=django.db.models.deletion.CASCADE,
+                    to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ['-created_at'],

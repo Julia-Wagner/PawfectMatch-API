@@ -1,5 +1,4 @@
-from rest_framework import generics, permissions, status
-from rest_framework.response import Response
+from rest_framework import generics, permissions
 
 from dogs.models import Dog
 from pawfect_api.permissions import IsOwnerOrReadOnly, IsShelterOrReadOnly

@@ -67,7 +67,7 @@ class CommentDetailViewTests(APITestCase):
     def test_user_can_update_own_comment(self):
         self.client.login(username='test',
                           password='password')
-        response = self.client.put(f'/comments/1/',
+        response = self.client.put('/comments/1/',
                                    {'content': 'Updated Comment'})
         comment = Comment.objects.filter(pk=1).first()
         self.assertEqual(comment.content, 'Updated Comment')
@@ -75,7 +75,7 @@ class CommentDetailViewTests(APITestCase):
 
     def test_user_cannot_update_other_user_comment(self):
         self.client.login(username='other', password='password')
-        response = self.client.put(f'/comments/1/',
+        response = self.client.put('/comments/1/',
                                    {'content': 'Should Fail'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 

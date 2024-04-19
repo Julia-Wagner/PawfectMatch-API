@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='profile',
             name='country',
-            field=django_countries.fields.CountryField(blank=True, max_length=2),
+            field=django_countries.fields.CountryField(blank=True,
+                                                       max_length=2),
         ),
     ]

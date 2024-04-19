@@ -49,6 +49,6 @@ class CommentSerializer(serializers.ModelSerializer):
 class CommentDetailSerializer(CommentSerializer):
     """
     Serializer for the Comment model used in Detail view
-    Profile is a read only field so that we do not have to set it on each update
+    Profile is a read only field, we do not have to set it on each update
     """
     profile = serializers.ReadOnlyField(source='profile.id')

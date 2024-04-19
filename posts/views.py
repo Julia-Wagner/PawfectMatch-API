@@ -51,7 +51,7 @@ class PostList(generics.ListCreateAPIView):
         return queryset
 
     def perform_create(self, serializer):
-            serializer.save(owner=self.request.user)
+        serializer.save(owner=self.request.user)
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):

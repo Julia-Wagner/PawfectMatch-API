@@ -15,6 +15,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='media',
             name='video',
-            field=models.FileField(blank=True, null=True, storage=cloudinary_storage.storage.VideoMediaCloudinaryStorage(), upload_to='post_videos/', validators=[cloudinary_storage.validators.validate_video]),
+            field=models.FileField(
+                blank=True,
+                null=True,
+                storage=cloudinary_storage.storage.VideoMediaCloudinaryStorage(),
+                upload_to='post_videos/',
+                validators=[cloudinary_storage.validators.validate_video]),
         ),
     ]

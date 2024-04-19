@@ -36,7 +36,7 @@ class FollowerListViewTests(APITestCase):
     def test_user_cannot_follow_twice(self):
         self.client.login(username='user1', password='password')
         self.client.post('/followers/',
-                                    {'followed': self.other_user.id})
+                         {'followed': self.other_user.id})
         response = self.client.post('/followers/',
                                     {'followed': self.other_user.id})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
