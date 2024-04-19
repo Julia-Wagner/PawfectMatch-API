@@ -10,6 +10,8 @@
   * [**Manual Testing**](#manual-testing)
   * [**Automated Testing**](#automated-testing)
   * [**User Story Testing**](#user-story-testing)
+  * [**Validation**](#validation)
+    * [**Python Validation**](#python-validation)
 <!-- TOC -->
 
 ## **Manual Testing**
@@ -50,3 +52,16 @@ In order for the **Acceptance Criteria met** to be ticked, every criterion speci
 | As a **developer**, I want to **receive dogs from the API based on defined criteria**, so that I can **allow filtering and matching**.                                | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/15) | &check;                 |
 | As a **developer**, I want to **receive notifications from the API**, so that I can **alert the user**.                                                               | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/16) | TODO                    |
 | As a **developer**, I want to **perform CRUD operations for chat messages**, so that I can **allow users to exchange messages**.                                      | [link](https://github.com/Julia-Wagner/PawfectMatch/issues/17) | TODO                    |
+
+## **Validation**
+
+### **Python Validation**
+
+To ensure that my code follows Pep8 style guidelines, I installed [Flake8](https://flake8.pycqa.org/en/latest/). I ran the linter on my whole project, only excluding the *venv* and *.devcontainer* directory to avoid errors from external packages.
+
+After fixing line-lengths and unused imports only errors for line-lengths in the *.env* file, a few migration files and the *settings.py* file are left.
+
+As in my last project, the only real error coming from a file that I changed was **F401 'env' imported but unused** from the *settings.py* file. Because I added this code following the Code Institute walkthrough projects, I decided to leave the statement as is. I also tried to remove the unused import, but then the application fails to run locally. So it seems the import is actually not unused and the error might be a misinterpretation from Flake8.
+
+![Flake8 validation](docs/screenshots/flake8.png)\
+*Flake8 validation result*
