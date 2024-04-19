@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import Comment
+from .models import Comment, BannedWord
 from rest_framework.test import APITestCase
 from rest_framework import status
 
@@ -9,8 +9,7 @@ class CommentListViewTests(APITestCase):
         self.user = User.objects.create_user(username='test',
                                              password='password')
         self.profile = self.user.profile
-        self.banned_words = ['bannedword1',
-                             'bannedword2']
+        BannedWord.objects.create(word='bannedword1')
 
     def test_can_list_comments(self):
         Comment.objects.create(owner=self.user,
@@ -27,6 +26,8 @@ class CommentListViewTests(APITestCase):
             {'profile': self.profile.id, 'content': 'New Comment'})
         count = Comment.objects.count()
         self.assertEqual(count, 1)
+        created_comment = Comment.objects.first()
+        self.assertEqual(str(created_comment), 'New Comment')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_user_not_logged_in_cant_create_comments(self):
@@ -40,7 +41,11 @@ class CommentListViewTests(APITestCase):
                           password='password')
         response = self.client.post(
             '/comments/',
-            {'text': 'Comment contains bannedword1'})
+            {'profile': self.profile.id,
+             'content': 'Comment contains bannedword1'})
+        self.assertIn("The word 'bannedword1' is banned. "
+                      "Please ensure writing appropriate comments.",
+                      response.data['content'])
         self.assertNotEqual(response.status_code, status.HTTP_201_CREATED)
 
 
