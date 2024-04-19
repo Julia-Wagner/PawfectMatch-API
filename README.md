@@ -159,6 +159,14 @@ Comments can be added to profiles and profiles can be filtered.
 - `/profiles/`: to list (**GET**) profiles.
 - `/profiles/:id/`: to show (**GET**) or update (**PUT**) a profile.
 
+## **Saves App**
+
+Similar to followers, saves can either be created or deleted, but not updated. Logged-in users can save posts.
+
+**API Endpoints:**
+- `/saves/`: to list (**GET**) or create (**POST**) saves.
+- `/saves/:id/`: to show (**GET**), delete (**DELETE**) a save.
+
 # **Testing**
 
 # **Deployment**
