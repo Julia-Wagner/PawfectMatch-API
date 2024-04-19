@@ -139,10 +139,15 @@ I decided to create a separate *medias* app instead of adding an image field to 
 
 Logged-in users can add images or videos to posts or dogs. The custom permission **IsShelterOrReadOnly** is used to ensure only shelter users can create medias for dogs.
 
+## **Posts App**
+
+Posts can be viewed by all users. Only logged-in users can create, update and delete a post. Multiple dogs can be linked to a post.
+
+Posts can be filtered and searched.
+
 **API Endpoints:**
-- `/medias/post/:post_id/`: to list (**GET**) or create (**POST**) medias for the specified post.
-- `/medias/dog/:dog_id/`: to list (**GET**) or create (**POST**) medias for the specified dog.
-- `/medias/:id/`: to show (**GET**), update (**PUT**) or delete (**DELETE**) a media.
+- `/posts/`: to list (**GET**) or create (**POST**) posts.
+- `/posts/:id/`: to show (**GET**), update (**PUT**) or delete (**DELETE**) a post.
 
 # **Testing**
 
