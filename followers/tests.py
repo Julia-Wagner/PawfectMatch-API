@@ -24,6 +24,8 @@ class FollowerListViewTests(APITestCase):
         response = self.client.post('/followers/',
                                     {'followed': self.other_user.id})
         self.assertEqual(Follower.objects.count(), 1)
+        created_follow = Follower.objects.first()
+        self.assertEqual(str(created_follow), 'user1 user2')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_user_not_logged_in_cant_create_followers(self):
