@@ -6,6 +6,9 @@ from django_countries.serializers import CountryFieldMixin
 
 
 class ProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
+    """
+    Serializer for the Profile model
+    """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     following_id = serializers.SerializerMethodField()
@@ -16,10 +19,16 @@ class ProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
     comments_count = serializers.ReadOnlyField()
 
     def get_is_owner(self, obj):
+        """
+        Check if the current user is the owner of the profile
+        """
         request = self.context['request']
         return request.user == obj.owner
 
     def get_following_id(self, obj):
+        """
+        Get the ID of the follow for the current user and the profile owner
+        """
         user = self.context['request'].user
         if user.is_authenticated:
             following = Follower.objects.filter(

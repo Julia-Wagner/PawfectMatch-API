@@ -3,12 +3,18 @@ from .models import Dog, DogCharacteristic
 
 
 class DogCharacteristicSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the DogCharacteristic model
+    """
     class Meta:
         model = DogCharacteristic
         fields = ['id', 'characteristic']
 
 
 class DogSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Dog model
+    """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     characteristics = serializers.PrimaryKeyRelatedField(
@@ -18,6 +24,9 @@ class DogSerializer(serializers.ModelSerializer):
         required=False)
 
     def get_is_owner(self, obj):
+        """
+        Check if the current user is the owner of the dog
+        """
         request = self.context['request']
         return request.user == obj.owner
 

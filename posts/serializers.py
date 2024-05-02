@@ -6,6 +6,9 @@ from saves.models import Save
 
 
 class PostSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Post model
+    """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
@@ -17,10 +20,16 @@ class PostSerializer(serializers.ModelSerializer):
     main_image = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
+        """
+        Check if the current user is the owner of the post
+        """
         request = self.context['request']
         return request.user == obj.owner
 
     def get_save_id(self, obj):
+        """
+        Get the ID of the save associated with the post for the current user
+        """
         user = self.context['request'].user
         if user.is_authenticated:
             save = Save.objects.filter(
@@ -30,6 +39,10 @@ class PostSerializer(serializers.ModelSerializer):
         return None
 
     def get_main_image(self, obj):
+        """
+        Get the URL of the main image associated with the post
+        If no main image is found, a default image URL is returned
+        """
         main_media = obj.medias.filter(is_main_image=True).first()
         if main_media:
             return main_media.image.url

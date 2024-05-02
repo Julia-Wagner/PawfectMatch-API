@@ -14,6 +14,9 @@ class SaveSerializer(serializers.ModelSerializer):
         fields = ['id', 'created_at', 'owner', 'post']
 
     def create(self, validated_data):
+        """
+        Create a new dave instance and check for duplicates
+        """
         try:
             return super().create(validated_data)
         except IntegrityError:

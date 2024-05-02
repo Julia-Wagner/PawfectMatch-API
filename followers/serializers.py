@@ -17,6 +17,9 @@ class FollowerSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
+        """
+        Create a follower instance and check for duplicates
+        """
         try:
             return super().create(validated_data)
         except IntegrityError:

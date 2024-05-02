@@ -3,10 +3,16 @@ from .models import Media
 
 
 class MediaSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Media model
+    """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
 
     def validate(self, attrs):
+        """
+        Validate the uploaded media
+        """
         # get the type to validate
         media_type = attrs.get('type')
 
@@ -41,6 +47,9 @@ class MediaSerializer(serializers.ModelSerializer):
         return attrs
 
     def get_is_owner(self, obj):
+        """
+        Check if the current user is the owner of the media
+        """
         request = self.context['request']
         return request.user == obj.owner
 

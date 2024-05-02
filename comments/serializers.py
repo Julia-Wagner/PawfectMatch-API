@@ -12,13 +12,12 @@ class CommentSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
-    # to get natural time like 3 hours ago instead of timestamp
     created_at = serializers.SerializerMethodField()
     updated_at = serializers.SerializerMethodField()
 
     def validate_content(self, value):
         """
-        validate the comment to ensure no banned words are used
+        Validate the comment to ensure no banned words are used
         """
         banned_words = BannedWord.objects.values_list('word', flat=True)
         for word in banned_words:
@@ -29,13 +28,22 @@ class CommentSerializer(serializers.ModelSerializer):
         return value
 
     def get_is_owner(self, obj):
+        """
+        Check if the current user is the owner of the comment
+        """
         request = self.context['request']
         return request.user == obj.owner
 
     def get_created_at(self, obj):
+        """
+        Get natural time like 3 hours ago instead of timestamp
+        """
         return naturaltime(obj.created_at)
 
     def get_updated_at(self, obj):
+        """
+        Get natural time like 3 hours ago instead of timestamp
+        """
         return naturaltime(obj.updated_at)
 
     class Meta:

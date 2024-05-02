@@ -7,6 +7,9 @@ from posts.models import Post
 
 class SaveListViewTests(APITestCase):
     def setUp(self):
+        """
+        Set up the testing environment
+        """
         self.user = User.objects.create_user(username='user1',
                                              password='password')
         self.post = Post.objects.create(title="Sample Post",
@@ -15,12 +18,18 @@ class SaveListViewTests(APITestCase):
                                                    password='password')
 
     def test_list_saves(self):
+        """
+        Test if a logged-in user can list all their saves
+        """
         Save.objects.create(owner=self.user, post=self.post)
         self.client.login(username='user1', password='password')
         response = self.client.get('/saves/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_save(self):
+        """
+        Test if a logged-in user can create a save
+        """
         self.client.login(username='user1', password='password')
         response = self.client.post('/saves/', {'post': self.post.id})
         self.assertEqual(Save.objects.count(), 1)
@@ -29,10 +38,16 @@ class SaveListViewTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_user_not_logged_in_cant_create_save(self):
+        """
+        Test if a user that is not authenticated cannot create a save
+        """
         response = self.client.post('/saves/', {'post': self.post.id})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_user_cannot_save_twice(self):
+        """
+        Test if a user cannot create a save for the same post twice
+        """
         self.client.login(username='user1', password='password')
         self.client.post('/saves/', {'post': self.post.id})
         response = self.client.post('/saves/', {'post': self.post.id})
@@ -42,6 +57,9 @@ class SaveListViewTests(APITestCase):
 
 class SaveDetailViewTests(APITestCase):
     def setUp(self):
+        """
+        Set up the testing environment
+        """
         self.user = User.objects.create_user(username='user1',
                                              password='password')
         self.post = Post.objects.create(title="Sample Post",
@@ -51,17 +69,26 @@ class SaveDetailViewTests(APITestCase):
                                                    password='password')
 
     def test_retrieve_save(self):
+        """
+        Test if a logged-in user can get a save
+        """
         self.client.login(username='user1', password='password')
         response = self.client.get('/saves/1/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_delete_own_save(self):
+        """
+        Test if a logged-in user can delete their save
+        """
         self.client.login(username='user1', password='password')
         response = self.client.delete('/saves/1/')
         self.assertEqual(Save.objects.count(), 0)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_user_cant_delete_another_users_save(self):
+        """
+        Test if a logged-in user cannot delete another user´s save
+        """
         self.client.login(username='user2', password='password')
         response = self.client.delete('/saves/1/')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
