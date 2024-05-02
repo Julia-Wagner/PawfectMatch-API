@@ -10,11 +10,20 @@ class SaveList(generics.ListCreateAPIView):
     Create a save if logged in.
     perform_create: associate the save with the logged-in user.
     """
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = SaveSerializer
-    queryset = Save.objects.all()
+
+    def get_queryset(self):
+        """
+        Get the queryset for listing saves
+        """
+        user = self.request.user
+        return Save.objects.filter(owner=user)
 
     def perform_create(self, serializer):
+        """
+        Create a save and associate it with the logged-in user
+        """
         serializer.save(owner=self.request.user)
 
 
