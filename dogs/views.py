@@ -56,22 +56,20 @@ class DogDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Dog.objects.all()
 
 
-class DogCharacteristicList(generics.ListCreateAPIView):
+class DogCharacteristicList(generics.ListAPIView):
     """
     List all dog characteristics.
     Create a new one if logged in and user is shelter.
     """
     serializer_class = DogCharacteristicSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly
-                          & IsShelterOrReadOnly]
+    permission_classes = [permissions.AllowAny]
     queryset = DogCharacteristic.objects.all()
 
 
-class DogCharacteristicDetail(generics.RetrieveUpdateDestroyAPIView):
+class DogCharacteristicDetail(generics.RetrieveAPIView):
     """
     Retrieve a dog characteristic and edit or delete it if you own it.
     """
     serializer_class = DogCharacteristicSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly
-                          & IsShelterOrReadOnly]
+    permission_classes = [permissions.AllowAny]
     queryset = DogCharacteristic.objects.all()

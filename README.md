@@ -118,15 +118,15 @@ Besides the **Comment** model, I added a **BannedWord** model. This allows super
 
 Dogs can only be managed by users with the profile type *shelter*. To ensure this, I added the custom permission **IsShelterOrReadOnly**. Logged-in shelters can create dogs and edit or delete their own dogs.
 
-Besides the **Dog** model, I added a **DogCharacteristic** model. Characteristics can also be created, edited, and deleted by shelter users. Existing characteristics can be linked to dogs.
+Besides the **Dog** model, I added a **DogCharacteristic** model. Characteristics can be created, edited, and deleted by superusers in the admin panel. Existing characteristics can be linked to dogs. I decided to prevent normal users from creating, updating or deleting characteristics and instead allow them to pick from the predefined ones created by superusers.
 
 I created a custom **DogFilter** to allow filtering dogs by their characteristics and other fields.
 
 **API Endpoints:**
 - `/dogs/`: to list (**GET**) or create (**POST**) dogs.
 - `/dogs/:id/`: to show (**GET**), update (**PUT**) or delete (**DELETE**) a dog.
-- `/dogs/characteristics/`: to list (**GET**) or create (**POST**) dog characteristics.
-- `/dogs/characteristics/:id/`: to show (**GET**), update (**PUT**) or delete (**DELETE**) a dog characteristic.
+- `/dogs/characteristics/`: to list (**GET**) dog characteristics.
+- `/dogs/characteristics/:id/`: to show (**GET**) a dog characteristic.
 
 ## **Followers App**
 
