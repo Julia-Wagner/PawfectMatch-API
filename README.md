@@ -16,6 +16,7 @@ The PawfectMatch API is a Django API for [PawfectMatch](https://github.com/Julia
     * [**Epic: Posts**](#epic-posts)
     * [**Epic: Dog Posts**](#epic-dog-posts)
     * [**Epic: Notifications and Communication**](#epic-notifications-and-communication)
+  * [**Database Schema**](#database-schema)
 * [**Features/Apps**](#featuresapps)
   * [**Comments App**](#comments-app)
   * [**Dogs App**](#dogs-app)
@@ -99,6 +100,20 @@ I also decided to add these stories to the [project board](https://github.com/us
 |----------------------------------------------------------------------------------------------------------------------------------|-----------------|
 | As a **developer**, I want to **receive notifications from the API**, so that I can **alert the user**.                          | **COULD HAVE**  |
 | As a **developer**, I want to **perform CRUD operations for chat messages**, so that I can **allow users to exchange messages**. | **COULD HAVE**  |
+
+## **Database Schema**
+
+After defining the needed features for the application, I started creating my database schema. I tried to think of the best way to connect dogs and posts and how to efficiently upload different types of media for posts.
+
+I decided to create a separate *media* table, this way the user can uploas multiple images for a post and not just the main image.
+
+![Database Schema](docs/screenshots/database_schema.png)\
+*Database Schema for PawfectMatch*
+
+After finishing  my project, I exported an ERD from Django following [this tutorial](https://www.wplogout.com/export-database-diagrams-erd-from-django/). It shows all of my apps and models with my custom models **BannedWord**, **Media**, **Dog** and **DogCharacteristic** with the created tables. As well as other necessary relations, like the tables created by the **allauth** package.
+
+![Final ERD](erd.png)\
+*Final ERD*
 
 # **Features/Apps**
 
@@ -352,3 +367,5 @@ Forking creates a copy of the project on GitHub. Follow these steps to fork this
 - [python-magic](https://github.com/ahupp/python-magic#dependencies) - necessary to upload videos to cloudinary.
 - [coverage](https://coverage.readthedocs.io/en/7.4.4/) - to measure testing coverage.
 - [django-filters](https://django-filter.readthedocs.io/en/stable/) - to implement filter functionality.
+- [graphviz](https://graphviz.org/) - graph visualization software, used for generating the ERD.
+- [django-extensions](https://django-extensions.readthedocs.io/en/latest/) - collection of custom extensions for the Django Framework, used for generating the ERD.

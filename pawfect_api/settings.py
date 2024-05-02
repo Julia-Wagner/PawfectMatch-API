@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'corsheaders',
     'django_filters',
+    'django_extensions',
 
     'profiles',
     'posts',
@@ -204,3 +205,9 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# https://www.wplogout.com/export-database-diagrams-erd-from-django/
+GRAPH_MODELS = {
+    'all_applications': True,
+    'graph_models': True,
+}
