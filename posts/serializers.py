@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from dogs.models import Dog
+from followers.models import Follower
 from .models import Post
 from saves.models import Save
 
@@ -11,6 +12,7 @@ class PostSerializer(serializers.ModelSerializer):
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
+    is_following = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
     dogs = serializers.PrimaryKeyRelatedField(
@@ -25,6 +27,19 @@ class PostSerializer(serializers.ModelSerializer):
         """
         request = self.context['request']
         return request.user == obj.owner
+
+    def get_is_following(self, obj):
+        """
+        Check if the current user is following the owner of the post
+        """
+        request = self.context['request']
+        owner = obj.owner
+        user = request.user
+        if user.is_authenticated:
+            following = Follower.objects.filter(owner=user,
+                                                followed=owner).exists()
+            return following
+        return False
 
     def get_save_id(self, obj):
         """
@@ -58,5 +73,5 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'is_owner', 'profile_id', 'profile_image',
             'title', 'type', 'content', 'created_at', 'updated_at', 'dogs',
-            'save_id', 'saves_count', 'main_image'
+            'save_id', 'saves_count', 'main_image', 'is_following'
         ]
