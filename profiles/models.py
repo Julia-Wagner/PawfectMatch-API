@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
-from django_countries.fields import CountryField
 
 
 class Profile(models.Model):
@@ -14,7 +13,7 @@ class Profile(models.Model):
     address_2 = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=255, blank=True)
     postcode = models.CharField(max_length=255, blank=True)
-    country = CountryField(blank=True)
+    country = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
     image = models.ImageField(
         upload_to='images/', default='../cgatwxc9v9hkqy4e5kvb'

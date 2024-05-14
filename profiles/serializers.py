@@ -2,10 +2,9 @@ from rest_framework import serializers
 
 from followers.models import Follower
 from .models import Profile
-from django_countries.serializers import CountryFieldMixin
 
 
-class ProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     """
     Serializer for the Profile model
     """

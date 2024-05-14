@@ -363,7 +363,6 @@ Forking creates a copy of the project on GitHub. Follow these steps to fork this
 - [dj-rest-auth](https://dj-rest-auth.readthedocs.io/en/latest/) - REST API endpoints.
 - [django-cors-headers](https://pypi.org/project/django-cors-headers/) - adds Cross-Origin-Resource Sharing (CORS) headers to responses.
 - [djangorestframework-simplejwt](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/) - JSON web token authentication.
-- [django-countries](https://github.com/SmileyChris/django-countries) - provides country choices.
 - [python-magic](https://github.com/ahupp/python-magic#dependencies) - necessary to upload videos to cloudinary.
 - [coverage](https://coverage.readthedocs.io/en/7.4.4/) - to measure testing coverage.
 - [django-filters](https://django-filter.readthedocs.io/en/stable/) - to implement filter functionality.
