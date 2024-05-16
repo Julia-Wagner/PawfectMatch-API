@@ -17,7 +17,24 @@
 
 ## **Manual Testing**
 
-I tested each app manually while creating the views in the DRF API interface.
+The best manual test was developing the frontend, as I have to send many requests to the API and inspect the response. Building the frontend helped me improve and debug backend endpoints and ensure to send relevant data.
+
+I tested each app manually while creating the views in the DRF API interface. Additionally, I used Postman to test my endpoints, covering scenarios such as valid and invalid login attempts and CRUD operations. This process included checking for correct status codes, proper error handling, and validation rules. Here are a few screenshots of requests and responses in postman.
+
+![Postman login incorrect](docs/screenshots/postman_login_incorrect.png)\
+*Postman request with invalid login data*
+
+![Postman login](docs/screenshots/postman_login.png)\
+*Postman request with valid login data*
+
+![Postman profile](docs/screenshots/postman_profile.png)\
+*Postman profile request*
+
+![Postman posts](docs/screenshots/postman_posts.png)\
+*Postman posts request*
+
+![Postman posts](docs/screenshots/postman_post_incorrect.png)\
+*Postman post request with invalid id*
 
 ## **Automated Testing**
 
