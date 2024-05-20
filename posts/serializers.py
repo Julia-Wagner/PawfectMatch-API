@@ -66,7 +66,7 @@ class PostSerializer(serializers.ModelSerializer):
             if first_image_media:
                 return first_image_media.image.url
         return ('https://res.cloudinary.com/drgviypka/image/upload/'
-                'v1/f3hx6euwqexhgg3ehdik')
+                'v1/no_image')
 
     class Meta:
         model = Post

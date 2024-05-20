@@ -21,7 +21,7 @@ class Media(models.Model):
     type = models.CharField(max_length=20, choices=MEDIA_TYPES,
                             default='image')
     image = models.ImageField(
-        upload_to='post_images/', default='../f3hx6euwqexhgg3ehdik',
+        upload_to='post_images/', default='../no_image',
         blank=True)
     video = models.FileField(upload_to='post_videos/',
                              blank=True, null=True,
