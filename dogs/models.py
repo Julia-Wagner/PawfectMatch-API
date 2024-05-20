@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Case, When, Value, BooleanField
 
 
 class DogCharacteristic(models.Model):
@@ -43,7 +44,14 @@ class Dog(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = [
+            Case(
+                When(is_adopted=True, then=Value(1)),
+                When(is_adopted=False, then=Value(0)),
+                output_field=BooleanField(),
+            ),
+            '-created_at'
+        ]
 
     def __str__(self):
         return f'{self.id} {self.name}'
