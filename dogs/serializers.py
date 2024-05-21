@@ -19,11 +19,7 @@ class DogSerializer(serializers.ModelSerializer):
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
-    characteristics = serializers.PrimaryKeyRelatedField(
-        queryset=DogCharacteristic.objects.all(),
-        many=True,
-        allow_null=True,
-        required=False)
+    characteristics = DogCharacteristicSerializer(many=True, read_only=True)
     main_image = serializers.SerializerMethodField()
     age = serializers.SerializerMethodField()
     birthday = serializers.SerializerMethodField()
