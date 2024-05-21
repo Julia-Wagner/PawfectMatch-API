@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import serializers
 from .models import Dog, DogCharacteristic
 
@@ -6,6 +7,7 @@ class DogCharacteristicSerializer(serializers.ModelSerializer):
     """
     Serializer for the DogCharacteristic model
     """
+
     class Meta:
         model = DogCharacteristic
         fields = ['id', 'characteristic']
@@ -23,6 +25,7 @@ class DogSerializer(serializers.ModelSerializer):
         allow_null=True,
         required=False)
     main_image = serializers.SerializerMethodField()
+    age = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         """
@@ -55,8 +58,18 @@ class DogSerializer(serializers.ModelSerializer):
                 'https://res.cloudinary.com/drgviypka/image/upload/v1/no_image'
         }
 
+    def get_age(self, obj):
+        """
+        Calculate the age of the dog based on its birthday
+        """
+        today = timezone.now().date()
+        birth_date = obj.birthday.date()
+        age = today.year - birth_date.year - ((today.month, today.day) < (
+            birth_date.month, birth_date.day))
+        return age
+
     class Meta:
         model = Dog
         fields = ['id', 'owner', 'is_owner', 'name', 'breed', 'birthday',
-                  'size', 'gender', 'characteristics', 'is_adopted',
+                  'size', 'gender', 'characteristics', 'is_adopted', 'age',
                   'description', 'main_image', 'created_at', 'updated_at']
