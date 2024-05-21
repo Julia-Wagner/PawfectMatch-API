@@ -33,18 +33,27 @@ class DogSerializer(serializers.ModelSerializer):
 
     def get_main_image(self, obj):
         """
-        Get the URL of the main image associated with the dog
+        Get the URL and the id of the main image associated with the dog
         If no main image is found, a default image URL is returned
         """
         main_media = obj.medias.filter(is_main_image=True).first()
         if main_media:
-            return main_media.image.url
+            return {
+                'id': main_media.id,
+                'url': main_media.image.url
+            }
         else:
             first_image_media = obj.medias.filter(type='image').first()
             if first_image_media:
-                return first_image_media.image.url
-        return ('https://res.cloudinary.com/drgviypka/image/upload/'
-                'v1/no_image')
+                return {
+                    'id': first_image_media.id,
+                    'url': first_image_media.image.url
+                }
+        return {
+            'id': None,
+            'url':
+                'https://res.cloudinary.com/drgviypka/image/upload/v1/no_image'
+        }
 
     class Meta:
         model = Dog
