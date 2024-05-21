@@ -26,6 +26,7 @@ class DogSerializer(serializers.ModelSerializer):
         required=False)
     main_image = serializers.SerializerMethodField()
     age = serializers.SerializerMethodField()
+    birthday = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         """
@@ -67,6 +68,12 @@ class DogSerializer(serializers.ModelSerializer):
         age = today.year - birth_date.year - ((today.month, today.day) < (
             birth_date.month, birth_date.day))
         return age
+
+    def get_birthday(self, obj):
+        """
+        Return the birthday in dd.mm.yyyy format
+        """
+        return obj.birthday.strftime('%d.%m.%Y') if obj.birthday else None
 
     class Meta:
         model = Dog
