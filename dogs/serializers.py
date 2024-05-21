@@ -21,6 +21,8 @@ class DogSerializer(serializers.ModelSerializer):
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     owner_name = serializers.SerializerMethodField()
+    owner_phone = serializers.SerializerMethodField()
+    owner_address = serializers.SerializerMethodField()
     profile_id = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
     characteristics = DogCharacteristicSerializer(many=True, read_only=True)
@@ -42,6 +44,34 @@ class DogSerializer(serializers.ModelSerializer):
         owner_profile = Profile.objects.get(owner=obj.owner)
         return owner_profile.name if hasattr(owner_profile, 'name') \
             else obj.owner.username
+
+    def get_owner_phone(self, obj):
+        """
+        Return the owner's phone number if available.
+        """
+        owner_profile = Profile.objects.get(owner=obj.owner)
+        return owner_profile.phone if hasattr(owner_profile, 'phone') \
+            else "No phone number available"
+
+    def get_owner_address(self, obj):
+        """
+        Return the owner's phone number if available.
+        """
+        owner_profile = Profile.objects.get(owner=obj.owner)
+        address_details = []
+        if owner_profile.address_1:
+            address_details.append(owner_profile.address_1)
+        if owner_profile.address_2:
+            address_details.append(owner_profile.address_2)
+        if owner_profile.city:
+            address_details.append(f"{owner_profile.city}")
+        if owner_profile.postcode:
+            address_details.append(f"{owner_profile.postcode}")
+        if owner_profile.country:
+            address_details.append(f"{owner_profile.country}")
+
+        return ', '.join(
+            address_details) if address_details else "No address available."
 
     def get_profile_id(self, obj):
         """
@@ -115,4 +145,5 @@ class DogSerializer(serializers.ModelSerializer):
         fields = ['id', 'owner', 'is_owner', 'owner_name', 'name', 'breed',
                   'birthday', 'size', 'gender', 'characteristics',
                   'is_adopted', 'age', 'description', 'main_image',
-                  'created_at', 'updated_at', 'profile_id']
+                  'created_at', 'updated_at', 'profile_id',
+                  'owner_phone', 'owner_address']
