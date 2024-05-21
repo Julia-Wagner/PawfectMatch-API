@@ -63,7 +63,7 @@ class DogSerializer(serializers.ModelSerializer):
         Calculate the age of the dog based on its birthday
         """
         today = timezone.now().date()
-        birth_date = obj.birthday.date()
+        birth_date = obj.birthday
         age = today.year - birth_date.year - ((today.month, today.day) < (
             birth_date.month, birth_date.day))
         return age
