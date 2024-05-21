@@ -62,12 +62,32 @@ class DogSerializer(serializers.ModelSerializer):
     def get_age(self, obj):
         """
         Calculate the age of the dog based on its birthday
+        https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
         """
         today = timezone.now().date()
         birth_date = obj.birthday
-        age = today.year - birth_date.year - ((today.month, today.day) < (
-            birth_date.month, birth_date.day))
-        return age
+        age_in_years = (today.year - birth_date.year -
+                        ((today.month, today.day)
+                         < (birth_date.month, birth_date.day)))
+
+        # Calculate the total days passed since the dog's birthday
+        total_days_passed = (today.year * 365 + today.month * 30 + today.day -
+                             birth_date.year * 365 - birth_date.month * 30 -
+                             birth_date.day)
+
+        # Convert days to months and weeks
+        months_passed = total_days_passed // 30
+        weeks_passed = total_days_passed // 7
+
+        # Determine the age description
+        if age_in_years >= 1:
+            return f"{age_in_years} years old"
+        elif months_passed >= 1:
+            return f"{months_passed} months old"
+        elif weeks_passed >= 1:
+            return f"{weeks_passed} weeks old"
+        else:
+            return "Just born"
 
     def get_birthday(self, obj):
         """
