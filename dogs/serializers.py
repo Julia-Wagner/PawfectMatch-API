@@ -1,5 +1,7 @@
 from django.utils import timezone
 from rest_framework import serializers
+
+from profiles.models import Profile
 from .models import Dog, DogCharacteristic
 
 
@@ -18,6 +20,7 @@ class DogSerializer(serializers.ModelSerializer):
     Serializer for the Dog model
     """
     owner = serializers.ReadOnlyField(source='owner.username')
+    owner_name = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
     characteristics = DogCharacteristicSerializer(many=True, read_only=True)
     main_image = serializers.SerializerMethodField()
@@ -30,6 +33,14 @@ class DogSerializer(serializers.ModelSerializer):
         """
         request = self.context['request']
         return request.user == obj.owner
+
+    def get_owner_name(self, obj):
+        """
+        Return the owner's name if available, otherwise return the username.
+        """
+        owner_profile = Profile.objects.get(owner=obj.owner)
+        return owner_profile.name if hasattr(owner_profile, 'name') \
+            else obj.owner.username
 
     def get_main_image(self, obj):
         """
@@ -93,6 +104,7 @@ class DogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Dog
-        fields = ['id', 'owner', 'is_owner', 'name', 'breed', 'birthday',
-                  'size', 'gender', 'characteristics', 'is_adopted', 'age',
-                  'description', 'main_image', 'created_at', 'updated_at']
+        fields = ['id', 'owner', 'is_owner', 'owner_name', 'name', 'breed',
+                  'birthday', 'size', 'gender', 'characteristics',
+                  'is_adopted', 'age', 'description', 'main_image',
+                  'created_at', 'updated_at']
