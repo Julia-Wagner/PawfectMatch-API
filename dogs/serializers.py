@@ -21,6 +21,7 @@ class DogSerializer(serializers.ModelSerializer):
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     owner_name = serializers.SerializerMethodField()
+    profile_id = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
     characteristics = DogCharacteristicSerializer(many=True, read_only=True)
     main_image = serializers.SerializerMethodField()
@@ -41,6 +42,13 @@ class DogSerializer(serializers.ModelSerializer):
         owner_profile = Profile.objects.get(owner=obj.owner)
         return owner_profile.name if hasattr(owner_profile, 'name') \
             else obj.owner.username
+
+    def get_profile_id(self, obj):
+        """
+        Return the owner's profile id.
+        """
+        owner_profile = Profile.objects.get(owner=obj.owner)
+        return owner_profile.id
 
     def get_main_image(self, obj):
         """
@@ -107,4 +115,4 @@ class DogSerializer(serializers.ModelSerializer):
         fields = ['id', 'owner', 'is_owner', 'owner_name', 'name', 'breed',
                   'birthday', 'size', 'gender', 'characteristics',
                   'is_adopted', 'age', 'description', 'main_image',
-                  'created_at', 'updated_at']
+                  'created_at', 'updated_at', 'profile_id']
