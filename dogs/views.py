@@ -16,7 +16,7 @@ class DogFilter(FilterSet):
         queryset=DogCharacteristic.objects.all(),
         field_name='characteristics__id',
         to_field_name='id',
-        conjoined=False)
+        conjoined=True)
 
     class Meta:
         model = Dog
