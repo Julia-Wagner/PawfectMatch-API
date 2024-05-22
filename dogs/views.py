@@ -18,9 +18,13 @@ class DogFilter(FilterSet):
         to_field_name='id',
         conjoined=True)
 
+    posts__id = filters.NumberFilter(field_name='posts__id',
+                                     lookup_expr='exact')
+
     class Meta:
         model = Dog
-        fields = ['breed', 'size', 'gender', 'is_adopted', 'characteristics']
+        fields = ['breed', 'size', 'gender', 'is_adopted', 'characteristics',
+                  'posts__id']
 
 
 class DogList(generics.ListCreateAPIView):
