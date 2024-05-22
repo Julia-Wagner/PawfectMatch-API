@@ -27,6 +27,8 @@ class PostList(generics.ListCreateAPIView):
         'saves__owner__profile',
         # user posts
         'owner__profile',
+        # filter by dog
+        'dogs__id',
     ]
     search_fields = [
         'owner__username',
@@ -48,6 +50,11 @@ class PostList(generics.ListCreateAPIView):
 
         if self.request.query_params.get('has_dogs') == 'true':
             queryset = queryset.filter(dog_count__gt=0)
+
+        # Filter by specific dog
+        dog_id = self.request.query_params.get('dog_id')
+        if dog_id:
+            queryset = queryset.filter(dogs__id=dog_id)
         return queryset
 
     def perform_create(self, serializer):
