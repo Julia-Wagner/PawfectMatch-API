@@ -14,9 +14,9 @@ class DogFilter(FilterSet):
     """
     characteristics = filters.ModelMultipleChoiceFilter(
         queryset=DogCharacteristic.objects.all(),
-        field_name='characteristics__characteristic',
+        field_name='characteristics__id',
         to_field_name='id',
-        conjoined=True)
+        conjoined=False)
 
     class Meta:
         model = Dog
