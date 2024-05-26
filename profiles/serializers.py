@@ -16,6 +16,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     followers_count = serializers.ReadOnlyField()
     following_count = serializers.ReadOnlyField()
     comments_count = serializers.ReadOnlyField()
+    address = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         """
@@ -36,6 +37,25 @@ class ProfileSerializer(serializers.ModelSerializer):
             return following.id if following else None
         return None
 
+    def get_address(self, obj):
+        """
+        Return the owner's phone number if available.
+        """
+        address_details = []
+        if obj.address_1:
+            address_details.append(obj.address_1)
+        if obj.address_2:
+            address_details.append(obj.address_2)
+        if obj.city:
+            address_details.append(f"{obj.city}")
+        if obj.postcode:
+            address_details.append(f"{obj.postcode}")
+        if obj.country:
+            address_details.append(f"{obj.country}")
+
+        return ', '.join(
+            address_details) if address_details else "No address available."
+
     class Meta:
         model = Profile
         fields = [
@@ -43,5 +63,5 @@ class ProfileSerializer(serializers.ModelSerializer):
             'address_1', 'address_2', 'city', 'postcode', 'country',
             'description', 'type', 'image', 'is_owner', 'following_id',
             'posts_count', 'dogs_count', 'followers_count', 'following_count',
-            'comments_count'
+            'comments_count', 'address'
         ]
