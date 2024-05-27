@@ -1,6 +1,7 @@
 from django.utils import timezone
 from rest_framework import serializers
 
+from medias.serializers import MediaSerializer
 from profiles.models import Profile
 from .models import Dog, DogCharacteristic
 
@@ -27,6 +28,7 @@ class DogSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     characteristics = DogCharacteristicSerializer(many=True, read_only=True)
     main_image = serializers.SerializerMethodField()
+    additional_images = serializers.SerializerMethodField()
     age = serializers.SerializerMethodField()
     birthday_formatted = serializers.SerializerMethodField()
 
@@ -104,6 +106,15 @@ class DogSerializer(serializers.ModelSerializer):
                 'https://res.cloudinary.com/drgviypka/image/upload/v1/no_image'
         }
 
+    def get_additional_images(self, obj):
+        """
+        Get the additional images associated with the dog
+        """
+        additional_media = obj.medias.filter(is_main_image=False, type='image')
+        return MediaSerializer(additional_media,
+                               many=True,
+                               context=self.context).data
+
     def get_age(self, obj):
         """
         Calculate the age of the dog based on its birthday
@@ -146,4 +157,4 @@ class DogSerializer(serializers.ModelSerializer):
                   'birthday', 'birthday_formatted', 'size', 'gender',
                   'characteristics', 'is_adopted', 'age', 'description',
                   'main_image', 'created_at', 'updated_at', 'profile_id',
-                  'owner_phone', 'owner_address']
+                  'owner_phone', 'owner_address', 'additional_images']
