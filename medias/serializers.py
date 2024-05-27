@@ -13,14 +13,8 @@ class MediaSerializer(serializers.ModelSerializer):
         """
         Validate the uploaded image
         """
-        if image.size > 5 * 1024 * 1024:
-            raise serializers.ValidationError('Image size larger than 5MB!')
-        if image.image.height > 4096:
-            raise serializers.ValidationError(
-                'Image height larger than 4096px!')
-        if image.image.width > 4096:
-            raise serializers.ValidationError(
-                'Image width larger than 4096px!')
+        if image.size > 8 * 1024 * 1024:
+            raise serializers.ValidationError('Image size larger than 8MB!')
         return image
 
     def validate_video(self, video):
