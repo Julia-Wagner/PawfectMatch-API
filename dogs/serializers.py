@@ -28,7 +28,7 @@ class DogSerializer(serializers.ModelSerializer):
     characteristics = DogCharacteristicSerializer(many=True, read_only=True)
     main_image = serializers.SerializerMethodField()
     age = serializers.SerializerMethodField()
-    birthday = serializers.SerializerMethodField()
+    birthday_formatted = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         """
@@ -134,7 +134,7 @@ class DogSerializer(serializers.ModelSerializer):
         else:
             return "Just born"
 
-    def get_birthday(self, obj):
+    def get_birthday_formatted(self, obj):
         """
         Return the birthday in dd.mm.yyyy format
         """
@@ -143,7 +143,7 @@ class DogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dog
         fields = ['id', 'owner', 'is_owner', 'owner_name', 'name', 'breed',
-                  'birthday', 'size', 'gender', 'characteristics',
-                  'is_adopted', 'age', 'description', 'main_image',
-                  'created_at', 'updated_at', 'profile_id',
+                  'birthday', 'birthday_formatted', 'size', 'gender',
+                  'characteristics', 'is_adopted', 'age', 'description',
+                  'main_image', 'created_at', 'updated_at', 'profile_id',
                   'owner_phone', 'owner_address']
