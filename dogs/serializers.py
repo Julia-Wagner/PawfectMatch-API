@@ -26,7 +26,12 @@ class DogSerializer(serializers.ModelSerializer):
     owner_address = serializers.SerializerMethodField()
     profile_id = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
-    characteristics = DogCharacteristicSerializer(many=True)
+    characteristics = serializers.PrimaryKeyRelatedField(
+        queryset=DogCharacteristic.objects.all(),
+        many=True,
+        allow_null=True,
+        required=False)
+    characteristics_names = DogCharacteristicSerializer(many=True, read_only=True)
     main_image = serializers.SerializerMethodField()
     additional_images = serializers.SerializerMethodField()
     age = serializers.SerializerMethodField()
@@ -157,4 +162,5 @@ class DogSerializer(serializers.ModelSerializer):
                   'birthday', 'birthday_formatted', 'size', 'gender',
                   'characteristics', 'is_adopted', 'age', 'description',
                   'main_image', 'created_at', 'updated_at', 'profile_id',
-                  'owner_phone', 'owner_address', 'additional_images']
+                  'owner_phone', 'owner_address', 'additional_images',
+                  'characteristics_names']
