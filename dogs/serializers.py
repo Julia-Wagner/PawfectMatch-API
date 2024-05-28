@@ -26,7 +26,7 @@ class DogSerializer(serializers.ModelSerializer):
     owner_address = serializers.SerializerMethodField()
     profile_id = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
-    characteristics = DogCharacteristicSerializer(many=True, read_only=True)
+    characteristics = DogCharacteristicSerializer(many=True)
     main_image = serializers.SerializerMethodField()
     additional_images = serializers.SerializerMethodField()
     age = serializers.SerializerMethodField()
