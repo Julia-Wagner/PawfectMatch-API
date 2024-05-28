@@ -31,7 +31,7 @@ class DogSerializer(serializers.ModelSerializer):
         many=True,
         allow_null=True,
         required=False)
-    characteristics_names = DogCharacteristicSerializer(many=True, read_only=True)
+    characteristics_names = serializers.SerializerMethodField()
     main_image = serializers.SerializerMethodField()
     additional_images = serializers.SerializerMethodField()
     age = serializers.SerializerMethodField()
@@ -155,6 +155,12 @@ class DogSerializer(serializers.ModelSerializer):
         Return the birthday in dd.mm.yyyy format
         """
         return obj.birthday.strftime('%d.%m.%Y') if obj.birthday else None
+
+    def get_characteristics_names(self, obj):
+        """
+        Return the names of the characteristics associated with the dog
+        """
+        return [characteristic.characteristic for characteristic in obj.characteristics.all()]
 
     class Meta:
         model = Dog
