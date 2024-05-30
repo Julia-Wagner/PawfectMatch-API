@@ -67,6 +67,8 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', os.environ.get('ALLOWED_HOST')]
 CORS_ALLOW_HEADERS = [
     'authorization',
     'content-type',
+    'x-csrftoken',
+    'access-control-allow-credentials',
 ]
 
 # Application definition
