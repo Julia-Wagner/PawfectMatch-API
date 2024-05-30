@@ -113,9 +113,11 @@ if 'CLIENT_ORIGIN' in os.environ:
         os.environ.get('CLIENT_ORIGIN')
     ]
 else:
-    CORS_ALLOWED_ORIGINS = []
+    CORS_ALLOWED_ORIGINS = [
+        'https://pawfectmatch-60f883124db2.herokuapp.com'
+    ]
     CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"^192.168.1.8:3000$",
+        r"^https?://192\.168\.1\.8:3000$",
     ]
 
 # Add local development origin if CLIENT_ORIGIN_DEV is set
