@@ -158,9 +158,10 @@ class DogSerializer(serializers.ModelSerializer):
 
     def get_characteristics_names(self, obj):
         """
-        Return the names of the characteristics associated with the dog
+        Return the names and ids of the characteristics associated with the dog
         """
-        return [characteristic.characteristic for characteristic in obj.characteristics.all()]
+        return [{'id': char.id, 'characteristic': char.characteristic} for
+                char in obj.characteristics.all()]
 
     class Meta:
         model = Dog
