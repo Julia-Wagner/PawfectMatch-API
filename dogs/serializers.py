@@ -126,9 +126,10 @@ class DogSerializer(serializers.ModelSerializer):
         Get the video associated with the dog
         """
         video = obj.medias.filter(is_main_image=False, type='video')
-        return MediaSerializer(video,
-                               many=True,
-                               context=self.context).data
+        return {
+            'id': video.id,
+            'url': video.image.url
+        }
 
     def get_age(self, obj):
         """
