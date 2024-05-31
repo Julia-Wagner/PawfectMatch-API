@@ -129,7 +129,7 @@ class DogSerializer(serializers.ModelSerializer):
         if video:
             return {
                 'id': video.id,
-                'url': video.image.url
+                'url': video.video.url
             }
 
     def get_age(self, obj):
