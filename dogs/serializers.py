@@ -34,6 +34,7 @@ class DogSerializer(serializers.ModelSerializer):
     characteristics_names = serializers.SerializerMethodField()
     main_image = serializers.SerializerMethodField()
     additional_images = serializers.SerializerMethodField()
+    video = serializers.SerializerMethodField()
     age = serializers.SerializerMethodField()
     birthday_formatted = serializers.SerializerMethodField()
 
@@ -120,6 +121,15 @@ class DogSerializer(serializers.ModelSerializer):
                                many=True,
                                context=self.context).data
 
+    def get_video(self, obj):
+        """
+        Get the video associated with the dog
+        """
+        video = obj.medias.filter(is_main_image=False, type='video')
+        return MediaSerializer(video,
+                               many=True,
+                               context=self.context).data
+
     def get_age(self, obj):
         """
         Calculate the age of the dog based on its birthday
@@ -170,4 +180,4 @@ class DogSerializer(serializers.ModelSerializer):
                   'characteristics', 'is_adopted', 'age', 'description',
                   'main_image', 'created_at', 'updated_at', 'profile_id',
                   'owner_phone', 'owner_address', 'additional_images',
-                  'characteristics_names']
+                  'characteristics_names', 'video']
