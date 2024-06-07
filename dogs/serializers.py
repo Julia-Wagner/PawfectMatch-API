@@ -67,7 +67,8 @@ class DogSerializer(serializers.ModelSerializer):
         Return the owner's mail address if available.
         """
         owner_profile = Profile.objects.get(owner=obj.owner)
-        return owner_profile.mail_address if hasattr(owner_profile, 'mail_address') \
+        return owner_profile.mail_address if hasattr(owner_profile,
+                                                     'mail_address') \
             else "No mail address available"
 
     def get_owner_address(self, obj):
