@@ -62,7 +62,7 @@ class DogSerializer(serializers.ModelSerializer):
         return owner_profile.phone if hasattr(owner_profile, 'phone') \
             else "No phone number available"
 
-    def get_mail_address(self, obj):
+    def get_owner_mail_address(self, obj):
         """
         Return the owner's mail address if available.
         """
