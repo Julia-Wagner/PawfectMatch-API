@@ -22,6 +22,7 @@ class Profile(models.Model):
                             choices=[("shelter", "Shelter"),
                                      ("adopter", "Adopter")],
                             default="adopter")
+    mail_address = models.CharField(max_length=255, blank=True)
 
     class Meta:
         ordering = ['-created_at']

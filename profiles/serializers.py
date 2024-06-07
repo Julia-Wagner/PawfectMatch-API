@@ -63,5 +63,5 @@ class ProfileSerializer(serializers.ModelSerializer):
             'address_1', 'address_2', 'city', 'postcode', 'country',
             'description', 'type', 'image', 'is_owner', 'following_id',
             'posts_count', 'dogs_count', 'followers_count', 'following_count',
-            'comments_count', 'address'
+            'comments_count', 'address', 'mail_address'
         ]
