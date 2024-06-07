@@ -24,6 +24,7 @@ class DogSerializer(serializers.ModelSerializer):
     owner_name = serializers.SerializerMethodField()
     owner_phone = serializers.SerializerMethodField()
     owner_address = serializers.SerializerMethodField()
+    owner_mail_address = serializers.SerializerMethodField()
     profile_id = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
     characteristics = serializers.PrimaryKeyRelatedField(
@@ -60,6 +61,14 @@ class DogSerializer(serializers.ModelSerializer):
         owner_profile = Profile.objects.get(owner=obj.owner)
         return owner_profile.phone if hasattr(owner_profile, 'phone') \
             else "No phone number available"
+
+    def get_mail_address(self, obj):
+        """
+        Return the owner's mail address if available.
+        """
+        owner_profile = Profile.objects.get(owner=obj.owner)
+        return owner_profile.mail_address if hasattr(owner_profile, 'mail_address') \
+            else "No mail address available"
 
     def get_owner_address(self, obj):
         """
@@ -182,4 +191,4 @@ class DogSerializer(serializers.ModelSerializer):
                   'characteristics', 'is_adopted', 'age', 'description',
                   'main_image', 'created_at', 'updated_at', 'profile_id',
                   'owner_phone', 'owner_address', 'additional_images',
-                  'characteristics_names', 'video']
+                  'characteristics_names', 'video', 'owner_mail_address']
