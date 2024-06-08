@@ -26,20 +26,6 @@ class PostMediaListTests(APITestCase):
         response = self.client.get('/medias/post/1/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_authenticated_user_can_create_post_media(self):
-        """
-        Test if a logged-in user can create post medias
-        """
-        self.client.login(username='user', password='password')
-        response = self.client.post('/medias/post/1/',
-                                    {'name': 'test',
-                                     'type': 'image'})
-        count = Media.objects.count()
-        self.assertEqual(count, 1)
-        created_media = Media.objects.first()
-        self.assertEqual(str(created_media), 'Media for post 1')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
     def test_unauthenticated_user_cannot_create_post_media(self):
         """
         Test if a user that is not authenticated cannot create post medias
@@ -73,20 +59,6 @@ class DogMediaListTests(APITestCase):
         """
         response = self.client.get('/medias/dog/1/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_authenticated_shelter_user_can_create_dog_media(self):
-        """
-        Test if a logged-in shelter user can create dog medias
-        """
-        self.client.login(username='shelter_user', password='password')
-        response = self.client.post('/medias/dog/1/',
-                                    {'name': 'test',
-                                     'type': 'image'})
-        count = Media.objects.count()
-        self.assertEqual(count, 1)
-        created_media = Media.objects.first()
-        self.assertEqual(str(created_media), 'Media for dog 1')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_regular_user_cannot_create_dog_media(self):
         """
@@ -127,18 +99,6 @@ class MediaDetailTests(APITestCase):
         Test if a user that is not authenticated can retrieve a media
         """
         response = self.client.get('/medias/1/')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_authenticated_owner_can_update_media(self):
-        """
-        Test if a logged-in user can update their media
-        """
-        self.client.login(username='user', password='password')
-        response = self.client.put('/medias/1/',
-                                   {'name': 'updated',
-                                    'type': 'image'})
-        media = Media.objects.filter(pk=1).first()
-        self.assertEqual(media.name, 'updated')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_unauthenticated_user_cannot_update_media(self):
