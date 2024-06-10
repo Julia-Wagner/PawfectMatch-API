@@ -369,3 +369,4 @@ Forking creates a copy of the project on GitHub. Follow these steps to fork this
 - [graphviz](https://graphviz.org/) - graph visualization software, used for generating the ERD.
 - [django-extensions](https://django-extensions.readthedocs.io/en/latest/) - collection of custom extensions for the Django Framework, used for generating the ERD.
 - [whitenoise](https://pypi.org/project/whitenoise/) - static file serving for Python web apps.
+- [django_resized](https://pypi.org/project/django-resized/) - to automatically resize uploaded images.

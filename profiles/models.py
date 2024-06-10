@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django_resized import ResizedImageField
 
 
 class Profile(models.Model):
@@ -15,9 +16,11 @@ class Profile(models.Model):
     postcode = models.CharField(max_length=255, blank=True)
     country = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
-    image = models.ImageField(
-        upload_to='images/', default='../cgatwxc9v9hkqy4e5kvb'
-    )
+    image = ResizedImageField(size=[800, 800],
+                              quality=75,
+                              upload_to="images/",
+                              default="../cgatwxc9v9hkqy4e5kvb",
+                              force_format="WEBP")
     type = models.CharField(max_length=255,
                             choices=[("shelter", "Shelter"),
                                      ("adopter", "Adopter")],

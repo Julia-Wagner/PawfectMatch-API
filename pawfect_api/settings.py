@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'django_extensions',
+    'django_resized',
 
     'profiles',
     'posts',

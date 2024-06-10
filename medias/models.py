@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_resized import ResizedImageField
 
 from cloudinary_storage.storage import VideoMediaCloudinaryStorage
 
@@ -20,9 +21,12 @@ class Media(models.Model):
     description = models.TextField(blank=True)
     type = models.CharField(max_length=20, choices=MEDIA_TYPES,
                             default='image')
-    image = models.ImageField(
-        upload_to='post_images/', default='../no_image',
-        blank=True)
+    image = ResizedImageField(size=[800, 800],
+                              quality=75,
+                              upload_to="images/",
+                              default="../no_image",
+                              force_format="WEBP",
+                              blank=True)
     video = models.FileField(upload_to='post_videos/',
                              blank=True, null=True,
                              storage=VideoMediaCloudinaryStorage())
