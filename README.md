@@ -41,7 +41,7 @@ The PawfectMatch API is a Django API for [PawfectMatch](https://github.com/Julia
 
 # **Planning**
 
-I detailed planning process using the 5 UX planes is described in the [PawfectMatch repository](https://github.com/Julia-Wagner/PawfectMatch?tab=readme-ov-file#planning).
+A detailed planning process using the 5 UX planes is described in the [PawfectMatch repository](https://github.com/Julia-Wagner/PawfectMatch?tab=readme-ov-file#planning).
 
 ## **User Stories**
 
